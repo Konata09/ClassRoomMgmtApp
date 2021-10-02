@@ -45,13 +45,16 @@ export const Styles = StyleSheet.create({
     backgroundColor: Colors.highlightBg,
     borderStyle: "solid",
     margin: 5,
-    padding: 5,
+    paddingBottom: 4,
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingTop: 4,
     borderColor: Colors.highlightBg,
     borderWidth: 1,
     borderRadius: 11,
     width: 250,
-    height: 45,
-    fontSize: 17
+    height: 40,
+    fontSize: 15
   },
   menuContainer: {
     borderRadius: 11,
@@ -148,8 +151,7 @@ export const Styles = StyleSheet.create({
     paddingLeft: 10,
     paddingTop: 10
   },
-  classroomComponent: {
-  },
+  classroomComponent: {},
   classroomRect: {
     marginTop: 10,
     marginLeft: 8,

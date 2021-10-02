@@ -27,47 +27,49 @@ import {MyStackScreen} from "./screen/MyStackScreen";
 import {ClassroomsStackScreen} from "./screen/ClassroomsStackScreen";
 import {TicketStackScreen} from "./screen/TicketStackScreen";
 
+export var GlobalState = {
+  uid: 0,
+  username: "unknown",
+  rolename: "unknown",
+  isLoggedIn: false,
+  isAdmin: false,
+  isStaff: false,
+  phone: "",
+  serverAddr: "http://172.31.96.5:63112/api/v2",
+  token: "unknown"
+}
+
 export const API = new Api(
   new Configuration(
     {
-      basePath: "http://172.31.161.101:63112/api/v2",
+      // basePath: "http://172.31.161.101:63112/api/v2",
       // basePath: "http://172.31.168.150:63112/api/v2",
       // basePath: "http://172.31.55.199:63112/api/v2",
-      // basePath: "http://10.0.3.59:63112/api/v2",
+      basePath: GlobalState.serverAddr,
       headers: {
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlbmFtZSI6ImFkbWluIiwiaXNhZG1pbiI6dHJ1ZSwiaXNzdGFmZiI6dHJ1ZSwicGhvbmUiOjAsImV4cCI6MTYzMjEwMDY0MCwiaWF0IjoxNjMxNDk1ODQwfQ.4q4ujZ19kbFZlb9LuGe3U3ToKHuW1vWXe3Iql3zGsUs"
+        "authorization": "Bearer " + GlobalState.token
       }
     }
   )
 )
-
-const test = API.getMyTicketGet({
-  userid: "1"
-}).then((a) => console.log(a))
-
-export var GlobalState = {
-  isLoggedIn: true,
-  isAdmin: true,
-  isStaff: true,
-  uid: 1,
-  token: "jwt",
-  username: "admin"
-}
+// const test = API.getMyTicketGet({
+//   userid: "1"
+// }).then((a) => console.log(a))
 
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function LoggedInScreen() {
+export function LoggedInScreen({navigation, route}) {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        Alert.alert("Hold on!", "Are you sure you want to Exit?", [
+        Alert.alert("确认退出", "你确定要退出吗?", [
           {
-            text: "Cancel",
+            text: "取消",
             onPress: () => null,
             style: "cancel"
           },
-          {text: "YES", onPress: () => BackHandler.exitApp()}
+          {text: "确定", onPress: () => BackHandler.exitApp()}
         ]);
         return true;
       };
@@ -107,14 +109,14 @@ function LoggedInScreen() {
 }
 
 const App = () => {
-    // console.log(GlobalState.isLoggedIn)
+    console.log(GlobalState.isLoggedIn)
     return (
-        <NavigationContainer>
-          <RootStack.Navigator initialRouteName={GlobalState.isLoggedIn ? "LoggedInScreen" : "登录"}>
-            <RootStack.Screen name="LoggedInScreen" component={LoggedInScreen} options={{headerShown: false}}/>
-            <RootStack.Screen name="登录" component={LoginScreen} options={{headerShown: false}}/>
-          </RootStack.Navigator>
-        </NavigationContainer>
+      <NavigationContainer>
+        <RootStack.Navigator initialRouteName={"LoggedInScreen"}>
+          <RootStack.Screen name="LoggedInScreen" component={LoggedInScreen} options={{headerShown: false}}/>
+          <RootStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}}/>
+        </RootStack.Navigator>
+      </NavigationContainer>
     );
   }
 ;

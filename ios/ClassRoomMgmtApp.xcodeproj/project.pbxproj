@@ -11,9 +11,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		44F1EC94558F4B16573E3E25 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC1ACE7BA690381EA2221C8 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a */; };
+		1599F3DC44731F7EFF1F98F4 /* libPods-ClassRoomMgmtApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80120549223758D25EAAB15 /* libPods-ClassRoomMgmtApp.a */; };
+		3F8CC7C72B33FB80895EE6FB /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55688E3F6E9987D413A8EF46 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		AC800604F39FE880CFA88576 /* libPods-ClassRoomMgmtApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 357B9E796495B3F4027130EB /* libPods-ClassRoomMgmtApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,35 +30,19 @@
 		00E356EE1AD99517003FC87E /* ClassRoomMgmtAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClassRoomMgmtAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ClassRoomMgmtAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClassRoomMgmtAppTests.m; sourceTree = "<group>"; };
+		010E83C979B01F11A825BDD2 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ClassRoomMgmtApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassRoomMgmtApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ClassRoomMgmtApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ClassRoomMgmtApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ClassRoomMgmtApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ClassRoomMgmtApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ClassRoomMgmtApp/main.m; sourceTree = "<group>"; };
-		357B9E796495B3F4027130EB /* libPods-ClassRoomMgmtApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClassRoomMgmtApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		51A4A262A0127CFDBA1B1C62 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		6AFB34BD1A9197766E4012BC /* Pods-ClassRoomMgmtApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp.release.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp.release.xcconfig"; sourceTree = "<group>"; };
+		3A4D7A865586F09E32E5703A /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		53F11BB45B0E1621B620A106 /* Pods-ClassRoomMgmtApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp.release.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp.release.xcconfig"; sourceTree = "<group>"; };
+		55688E3F6E9987D413A8EF46 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ClassRoomMgmtApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8FC1ACE7BA690381EA2221C8 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A89EDFE2CF726A957F68F749 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		AE0E61EB26A02EB300D9AD4D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Brands.ttf; sourceTree = "<group>"; };
-		AE0E61EC26A02EB300D9AD4D /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
-		AE0E61ED26A02EB300D9AD4D /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AntDesign.ttf; sourceTree = "<group>"; };
-		AE0E61EE26A02EB300D9AD4D /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Foundation.ttf; sourceTree = "<group>"; };
-		AE0E61EF26A02EB300D9AD4D /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
-		AE0E61F026A02EB300D9AD4D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
-		AE0E61F126A02EB300D9AD4D /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
-		AE0E61F226A02EB300D9AD4D /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
-		AE0E61F326A02EB300D9AD4D /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		AE0E61F426A02EB300D9AD4D /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
-		AE0E61F526A02EB300D9AD4D /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
-		AE0E61F626A02EB300D9AD4D /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
-		AE0E61F726A02EB300D9AD4D /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		AE0E61F826A02EB300D9AD4D /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
-		AE0E61F926A02EB300D9AD4D /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
-		AE0E61FA26A02EB300D9AD4D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
-		C34729D296BD06691DE1B67F /* Pods-ClassRoomMgmtApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp.debug.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp.debug.xcconfig"; sourceTree = "<group>"; };
+		B80120549223758D25EAAB15 /* libPods-ClassRoomMgmtApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ClassRoomMgmtApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC2C54F591E3069D60A0F6BE /* Pods-ClassRoomMgmtApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClassRoomMgmtApp.debug.xcconfig"; path = "Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -67,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44F1EC94558F4B16573E3E25 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a in Frameworks */,
+				3F8CC7C72B33FB80895EE6FB /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC800604F39FE880CFA88576 /* libPods-ClassRoomMgmtApp.a in Frameworks */,
+				1599F3DC44731F7EFF1F98F4 /* libPods-ClassRoomMgmtApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,10 +83,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		059E10667C8581114095E21A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC2C54F591E3069D60A0F6BE /* Pods-ClassRoomMgmtApp.debug.xcconfig */,
+				53F11BB45B0E1621B620A106 /* Pods-ClassRoomMgmtApp.release.xcconfig */,
+				3A4D7A865586F09E32E5703A /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig */,
+				010E83C979B01F11A825BDD2 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* ClassRoomMgmtApp */ = {
 			isa = PBXGroup;
 			children = (
-				AE0E61EA26A02E6800D9AD4D /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -117,8 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				357B9E796495B3F4027130EB /* libPods-ClassRoomMgmtApp.a */,
-				8FC1ACE7BA690381EA2221C8 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a */,
+				B80120549223758D25EAAB15 /* libPods-ClassRoomMgmtApp.a */,
+				55688E3F6E9987D413A8EF46 /* libPods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -138,7 +132,7 @@
 				00E356EF1AD99517003FC87E /* ClassRoomMgmtAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				DE6728E8A16F7CAEC02B49DA /* Pods */,
+				059E10667C8581114095E21A /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -154,40 +148,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AE0E61EA26A02E6800D9AD4D /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				AE0E61ED26A02EB300D9AD4D /* AntDesign.ttf */,
-				AE0E61F526A02EB300D9AD4D /* Entypo.ttf */,
-				AE0E61F226A02EB300D9AD4D /* EvilIcons.ttf */,
-				AE0E61F826A02EB300D9AD4D /* Feather.ttf */,
-				AE0E61F326A02EB300D9AD4D /* FontAwesome.ttf */,
-				AE0E61EB26A02EB300D9AD4D /* FontAwesome5_Brands.ttf */,
-				AE0E61F626A02EB300D9AD4D /* FontAwesome5_Regular.ttf */,
-				AE0E61F126A02EB300D9AD4D /* FontAwesome5_Solid.ttf */,
-				AE0E61EF26A02EB300D9AD4D /* Fontisto.ttf */,
-				AE0E61EE26A02EB300D9AD4D /* Foundation.ttf */,
-				AE0E61F926A02EB300D9AD4D /* Ionicons.ttf */,
-				AE0E61FA26A02EB300D9AD4D /* MaterialCommunityIcons.ttf */,
-				AE0E61F426A02EB300D9AD4D /* MaterialIcons.ttf */,
-				AE0E61EC26A02EB300D9AD4D /* Octicons.ttf */,
-				AE0E61F026A02EB300D9AD4D /* SimpleLineIcons.ttf */,
-				AE0E61F726A02EB300D9AD4D /* Zocial.ttf */,
-			);
-			name = Fonts;
-			sourceTree = "<group>";
-		};
-		DE6728E8A16F7CAEC02B49DA /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C34729D296BD06691DE1B67F /* Pods-ClassRoomMgmtApp.debug.xcconfig */,
-				6AFB34BD1A9197766E4012BC /* Pods-ClassRoomMgmtApp.release.xcconfig */,
-				A89EDFE2CF726A957F68F749 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig */,
-				51A4A262A0127CFDBA1B1C62 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -195,12 +155,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ClassRoomMgmtAppTests" */;
 			buildPhases = (
-				6D4A74B65FF847843F6D3C88 /* [CP] Check Pods Manifest.lock */,
+				F5DCF61FD4D65181394DFE16 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				1F449E9DA7FE558E84982A44 /* [CP] Embed Pods Frameworks */,
-				6CBE383150AB207A7EFBE2B7 /* [CP] Copy Pods Resources */,
+				BE441206A53187CFD7AB381E /* [CP] Embed Pods Frameworks */,
+				4D4F57E1BCFBF737812B316F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -216,14 +176,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ClassRoomMgmtApp" */;
 			buildPhases = (
-				62CAF75B482F5131000CC386 /* [CP] Check Pods Manifest.lock */,
+				A9CEB1C5C9CB5D37FFECF2C5 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				CE86DE53F547D1E02570C730 /* [CP] Embed Pods Frameworks */,
-				021AE136C54C55CBE3852FDB /* [CP] Copy Pods Resources */,
+				E1814CDC3C8EC9301832A936 /* [CP] Embed Pods Frameworks */,
+				F1AAA01A0FBBD724F9FD3745 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -304,41 +264,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		021AE136C54C55CBE3852FDB /* [CP] Copy Pods Resources */ = {
+		4D4F57E1BCFBF737812B316F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1F449E9DA7FE558E84982A44 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		62CAF75B482F5131000CC386 /* [CP] Check Pods Manifest.lock */ = {
+		A9CEB1C5C9CB5D37FFECF2C5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -360,24 +303,58 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6CBE383150AB207A7EFBE2B7 /* [CP] Copy Pods Resources */ = {
+		BE441206A53187CFD7AB381E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests/Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6D4A74B65FF847843F6D3C88 /* [CP] Check Pods Manifest.lock */ = {
+		E1814CDC3C8EC9301832A936 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1AAA01A0FBBD724F9FD3745 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5DCF61FD4D65181394DFE16 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -397,23 +374,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CE86DE53F547D1E02570C730 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ClassRoomMgmtApp/Pods-ClassRoomMgmtApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -468,7 +428,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A89EDFE2CF726A957F68F749 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig */;
+			baseConfigurationReference = 3A4D7A865586F09E32E5703A /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -476,7 +436,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ClassRoomMgmtAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -495,12 +455,12 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51A4A262A0127CFDBA1B1C62 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig */;
+			baseConfigurationReference = 010E83C979B01F11A825BDD2 /* Pods-ClassRoomMgmtApp-ClassRoomMgmtAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = ClassRoomMgmtAppTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -519,7 +479,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C34729D296BD06691DE1B67F /* Pods-ClassRoomMgmtApp.debug.xcconfig */;
+			baseConfigurationReference = BC2C54F591E3069D60A0F6BE /* Pods-ClassRoomMgmtApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -546,7 +506,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6AFB34BD1A9197766E4012BC /* Pods-ClassRoomMgmtApp.release.xcconfig */;
+			baseConfigurationReference = 53F11BB45B0E1621B620A106 /* Pods-ClassRoomMgmtApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -602,8 +562,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -625,10 +584,10 @@
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
-					"/Applications/Xcode-13.0.0-Beta.5.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.0.sdk/usr/lib/swift",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -669,7 +628,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -684,10 +643,10 @@
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"\"$(SDKROOT)/usr/lib/swift\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
-					"/Applications/Xcode-13.0.0-Beta.5.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.0.sdk/usr/lib/swift",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;

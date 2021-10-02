@@ -31,12 +31,6 @@ export interface InlineObject3 {
      * @memberof InlineObject3
      */
     password: string;
-    /**
-     *
-     * @type {string}
-     * @memberof InlineObject3
-     */
-    title: string;
 }
 
 export function InlineObject3FromJSON(json: any): InlineObject3 {
@@ -51,7 +45,6 @@ export function InlineObject3FromJSONTyped(json: any, ignoreDiscriminator: boole
 
         'username': json['username'],
         'password': json['password'],
-        'title': json['title'],
     };
 }
 
@@ -66,7 +59,6 @@ export function InlineObject3ToJSON(value?: InlineObject3 | null): any {
 
         'username': value.username,
         'password': value.password,
-        'title': value.title,
     };
 }
 

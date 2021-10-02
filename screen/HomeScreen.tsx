@@ -21,13 +21,20 @@ export function HomeScreen({navigation, route}) {
           setTickets(res.data)
           setIsGetInit(true)
         })
-        .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+        .catch(e => {
+          if (e.status === 401) {
+            console.error("用户登录过期")
+            navigation.navigate('LoginScreen')
+          } else {
+            Alert.alert("获取数据失败", `${e.message} ${e.status ? e.status : ''}`)
+          }
+        });
     }
   }, []);
 
   const handleTouch = (t: number) => {
     // navigation.push("Ticket Detail", {ticket: t})
-    navigation.navigate('LoggedInScreen', { screen: 'Ticket' });
+    navigation.navigate('LoggedInScreen', {screen: 'Ticket'});
   }
 
   const TicketComponent = (props) => {
