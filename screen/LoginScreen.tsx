@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Alert, BackHandler, Button, Image, ImageBackground, Text, TextInput, View} from "react-native";
 import {API, GlobalState} from "../App";
 import {Colors, Styles} from "../styles";
 import {useFocusEffect} from "@react-navigation/native";
-import { Buffer } from "buffer";
+import {Buffer} from "buffer";
+import {getAsyncStorage, setAsyncStorage, updateGlobalStateFromJWT} from "../utils";
 
 // @ts-ignore
 export function LoginScreen({navigation, route}) {
@@ -26,18 +27,37 @@ export function LoginScreen({navigation, route}) {
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     }, []));
-  React.useEffect(() => {
-    if (route.params?.post) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.post]);
+
+  // useEffect(() => {
+  //   let isLogin = false;
+  //   async function checkLoginState() {
+  //     const token = await getAsyncStorage("token");
+  //     if (token) {
+  //       updateGlobalStateFromJWT(token);
+  //       if (GlobalState.tokenExp > Math.floor((Date.now() + 60000)/1000)) { // 如果 Token 将在 1 分钟内过期 那么重新登录
+  //         const res = await API.refreshPost({inlineObject11: {username: GlobalState.username, uid: GlobalState.uid}})
+  //           .catch(_ => null);
+  //         if (res && res.retcode === 0) {
+  //           updateGlobalStateFromJWT(res.data.token);
+  //           await setAsyncStorage("token", res.data.token);
+  //           isLogin = true;
+  //           // setIsLogin(true);
+  //           // initScreen = "LoggedInScreen";
+  //         }
+  //       }
+  //     }
+  //   }
+  //   checkLoginState().then(()=>{
+  //     console.log(isLogin)
+  //     if (isLogin){
+  //       navigation.navigate("LoggedInScreen");
+  //     }
+  //   })
+  //   // let initScreen = "LoginScreen";
+  // }, [])
+
   const submitLogin = (): Promise<object> => {
-    return new Promise((resolve, reject) => {
-      API.loginPost({inlineObject3: {username: username, password: password}})
-        .then(res => resolve(res))
-        .catch(e => reject(e));
-    });
+    return API.loginPost({inlineObject3: {username: username, password: password}});
   }
   return (
     <>
@@ -59,17 +79,10 @@ export function LoginScreen({navigation, route}) {
             onPress={async () => {
               let res = await submitLogin().catch(e => Alert.alert("登录失败", `${e.message} ${e.status ? e.status : ''}`));
               if (res && res.retcode === 0) {
-                API.updateHeader({"authorization": `Bearer ${res.data.token}`});
-                const jwtPayload = res.data.token.split('.')[1];
-                const jwtData = JSON.parse(Buffer.from(jwtPayload, 'base64').toString());
-                GlobalState.uid = jwtData.uid;
-                GlobalState.username = jwtData.username;
-                GlobalState.rolename = jwtData.rolename;
-                GlobalState.isAdmin = jwtData.isadmin;
-                GlobalState.isStaff = jwtData.isstaff;
-                GlobalState.phone = jwtData.phone;
-                GlobalState.isLoggedIn = true;
+                updateGlobalStateFromJWT(res.data.token);
+                await setAsyncStorage("token", res.data.token);
                 navigation.goBack();
+                // navigation.navigate("LoggedInScreen");
               } else {
                 Alert.alert("登录失败", `${res.message}`);
               }

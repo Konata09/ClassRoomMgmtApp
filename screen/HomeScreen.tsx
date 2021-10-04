@@ -24,7 +24,7 @@ export function HomeScreen({navigation, route}) {
         .catch(e => {
           if (e.status === 401) {
             console.error("用户登录过期")
-            navigation.navigate('LoginScreen')
+            // navigation.navigate('LoginScreen')
           } else {
             Alert.alert("获取数据失败", `${e.message} ${e.status ? e.status : ''}`)
           }

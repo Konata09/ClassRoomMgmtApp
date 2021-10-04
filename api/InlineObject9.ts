@@ -25,6 +25,7 @@ export interface InlineObject9 {
      * @memberof InlineObject9
      */
     classId: number;
+    className: string;
     /**
      *
      * @type {string}
@@ -48,8 +49,8 @@ export function InlineObject9FromJSONTyped(json: any, ignoreDiscriminator: boole
         return json;
     }
     return {
-
         'classId': json['class_id'],
+        'className': json['class_name'],
         'cmdName': json['cmd_name'],
         'cmdId': json['cmd_id'],
     };
@@ -63,8 +64,8 @@ export function InlineObject9ToJSON(value?: InlineObject9 | null): any {
         return null;
     }
     return {
-
         'class_id': value.classId,
+        'class_name': value.className,
         'cmd_name': value.cmdName,
         'cmd_id': value.cmdId,
     };

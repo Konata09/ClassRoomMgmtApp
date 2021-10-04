@@ -103,7 +103,7 @@ export function ClassroomStatusScreen({navigation, route}) {
     14: "投影关",
   }
   const sendCmd = (id: number) => {
-    API.sendCmdPost({inlineObject9: {cmdId: id, classId: classId, cmdName: cmdNameMap.id}})
+    API.sendCmdPost({inlineObject9: {cmdId: id, classId: classId, className: name, cmdName: cmdNameMap.id}})
       .then(res => {
         console.debug(res)
       })

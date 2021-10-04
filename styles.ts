@@ -396,6 +396,4 @@ export const Styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: Colors.deepBg
   }
-
-
 });
