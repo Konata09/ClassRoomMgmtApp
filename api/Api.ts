@@ -12,6 +12,8 @@ import {InlineObject11, InlineObject11ToJSON} from "./InlineObject11";
 import {InlineObject12, InlineObject12ToJSON} from "./InlineObject12";
 import {InlineObject, InlineObjectToJSON} from "./InlineObject";
 import {InlineObject8, InlineObject8ToJSON} from "./InlineObject8";
+import {InlineObject13, InlineObject13ToJSON} from "./InlineObject13";
+import {InlineObject14, InlineObject14ToJSON} from "./InlineObject14";
 
 export interface AddTicketPostRequest {
   inlineObject2?: InlineObject2;
@@ -91,6 +93,14 @@ export interface SendCmdPostRequest {
 
 export interface SetDutyPostRequest {
   inlineObject?: InlineObject;
+}
+
+export interface SetDutyPutRequest {
+  inlineObject13?: InlineObject13;
+}
+
+export interface SetDutyDeleteRequest {
+  inlineObject14?: InlineObject14;
 }
 
 export interface SetTicketStatusPostRequest {
@@ -332,7 +342,7 @@ export class Api extends runtime.BaseAPI {
   async getDutyCalendarGetRaw(requestParameters: GetDutyCalendarGetRequest): Promise<runtime.ApiResponse<object>> {
     const queryParameters: runtime.HTTPQuery = {};
     const response = await this.request({
-      path: `/getDutyCalendar`,
+      path: `/getDuty`,
       method: 'GET',
       headers: {},
       query: queryParameters,
@@ -600,8 +610,7 @@ export class Api extends runtime.BaseAPI {
   }
 
   /**
-   * uid 为 0 表示无人
-   * SetDutyCalenderUser
+   * SetDutyCalender
    */
   async setDutyPostRaw(requestParameters: SetDutyPostRequest): Promise<runtime.ApiResponse<object>> {
     const queryParameters: runtime.HTTPQuery = {};
@@ -618,11 +627,48 @@ export class Api extends runtime.BaseAPI {
   }
 
   /**
-   * uid 为 0 表示无人
    * SetDutyCalenderUser
    */
   async setDutyPost(requestParameters: SetDutyPostRequest): Promise<object> {
     const response = await this.setDutyPostRaw(requestParameters);
+    return await response.value();
+  }
+
+  async setDutyPutRaw(requestParameters: SetDutyPutRequest): Promise<runtime.ApiResponse<object>> {
+    const queryParameters: runtime.HTTPQuery = {};
+    const headerParameters: runtime.HTTPHeaders = {};
+    headerParameters['Content-Type'] = 'application/json';
+    const response = await this.request({
+      path: `/setDuty`,
+      method: 'PUT',
+      headers: headerParameters,
+      query: queryParameters,
+      body: InlineObject13ToJSON(requestParameters.inlineObject13),
+    });
+    return new runtime.JSONApiResponse<any>(response);
+  }
+
+  async setDutyPut(requestParameters: SetDutyPutRequest): Promise<object> {
+    const response = await this.setDutyPutRaw(requestParameters);
+    return await response.value();
+  }
+
+  async setDutyDeleteRaw(requestParameters: SetDutyDeleteRequest): Promise<runtime.ApiResponse<object>> {
+    const queryParameters: runtime.HTTPQuery = {};
+    const headerParameters: runtime.HTTPHeaders = {};
+    headerParameters['Content-Type'] = 'application/json';
+    const response = await this.request({
+      path: `/setDuty`,
+      method: 'DELETE',
+      headers: headerParameters,
+      query: queryParameters,
+      body: InlineObject14ToJSON(requestParameters.inlineObject14),
+    });
+    return new runtime.JSONApiResponse<any>(response);
+  }
+
+  async setDutyDelete(requestParameters: SetDutyDeleteRequest): Promise<object> {
+    const response = await this.setDutyDeleteRaw(requestParameters);
     return await response.value();
   }
 

@@ -19,28 +19,26 @@ import {exists, mapValues} from './runtime';
  * @export
  * @interface InlineObject
  */
-export interface InlineObject {
+export interface InlineObject13 {
   uid: number;
   day: string;
-  id: string;
 }
 
-export function InlineObjectFromJSON(json: any): InlineObject {
-  return InlineObjectFromJSONTyped(json, false);
+export function InlineObject13FromJSON(json: any): InlineObject13 {
+  return InlineObject13FromJSONTyped(json, false);
 }
 
-export function InlineObjectFromJSONTyped(json: any, ignoreDiscriminator: boolean): InlineObject {
+export function InlineObject13FromJSONTyped(json: any, ignoreDiscriminator: boolean): InlineObject13 {
   if ((json === undefined) || (json === null)) {
     return json;
   }
   return {
     'uid': json['uid'],
     'day': json['day'],
-    'id': json['id']
   };
 }
 
-export function InlineObjectToJSON(value?: InlineObject | null): any {
+export function InlineObject13ToJSON(value?: InlineObject13 | null): any {
   if (value === undefined) {
     return undefined;
   }
@@ -50,7 +48,6 @@ export function InlineObjectToJSON(value?: InlineObject | null): any {
   return {
     'uid': value.uid,
     'day': value.day,
-    'id': value.id,
   };
 }
 
