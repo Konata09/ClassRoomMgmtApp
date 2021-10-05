@@ -81,8 +81,7 @@ export function LoginScreen({navigation, route}) {
               if (res && res.retcode === 0) {
                 updateGlobalStateFromJWT(res.data.token);
                 await setAsyncStorage("token", res.data.token);
-                navigation.goBack();
-                // navigation.navigate("LoggedInScreen");
+                navigation.navigate("LoggedInScreen");
               } else {
                 Alert.alert("登录失败", `${res.message}`);
               }

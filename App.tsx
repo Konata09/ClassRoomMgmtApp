@@ -37,7 +37,8 @@ export var GlobalState = {
   isAdmin: false,
   isStaff: false,
   phone: "",
-  serverAddr: "http://172.31.96.5:63112/api/v2",
+  // serverAddr: "http://172.31.96.5:63112/api/v2",
+  serverAddr: "http://10.0.3.59:63112/api/v2",
   token: "unknown",
   tokenExp: 0,
 }
@@ -63,53 +64,20 @@ const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export function LoggedInScreen({navigation, route}) {
-  useEffect(() => {
-    console.log("sd")
-    let isLogin = false;
-    async function checkLoginState() {
-      const token = await getAsyncStorage("token");
-      if (token) {
-        updateGlobalStateFromJWT(token);
-        if (GlobalState.tokenExp > Math.floor((Date.now() + 60000)/1000)) { // 如果 Token 将在 1 分钟内过期 那么重新登录
-          const res = await API.refreshPost({inlineObject11: {username: GlobalState.username, uid: GlobalState.uid}})
-            .catch(_ => null);
-          if (res && res.retcode === 0) {
-            updateGlobalStateFromJWT(res.data.token);
-            await setAsyncStorage("token", res.data.token);
-            isLogin = true;
-            // setIsLogin(true);
-            // initScreen = "LoggedInScreen";
-          }
-        }
-      }
-    }
-    checkLoginState().then(()=>{
-      console.log(isLogin)
-      console.log("islogin: "+isLogin)
-      if (!isLogin){
-        navigation.navigate("LoginScreen");
-      }
-    })
-    // let initScreen = "LoginScreen";
-  }, [])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        Alert.alert("确认退出", "你确定要退出吗?", [
-          {
-            text: "取消",
-            onPress: () => null,
-            style: "cancel"
-          },
-          {text: "确定", onPress: () => BackHandler.exitApp()}
-        ]);
-        return true;
-      };
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
-      return () =>
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []));
+  React.useEffect(
+    () =>
+      navigation.addListener('beforeRemove', (e: any) => {
+        // Prevent default behavior of leaving the screen
+        e.preventDefault();
+        Alert.alert('确认退出', '你确定要退出吗?',
+          [
+            {text: "取消", style: 'cancel', onPress: () => null},
+            {text: '退出', style: 'destructive', onPress: () => BackHandler.exitApp()},
+          ]
+        );
+      }),
+    [navigation])
 
   return (
     <Tab.Navigator
@@ -140,46 +108,6 @@ export function LoggedInScreen({navigation, route}) {
     </Tab.Navigator>)
 }
 
-class App2 extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {initScreen: "LoginScreen"}
-
-    async function checkLoginState() {
-      const token = await getAsyncStorage("token");
-      console.log(token)
-      if (token) {
-        updateGlobalStateFromJWT(token);
-        if (GlobalState.tokenExp > Date.now() + 60000) { // 如果 Token 将在 1 分钟内过期 那么重新登录
-          const res = await API.refreshPost({inlineObject11: {username: GlobalState.username, uid: GlobalState.uid}})
-            .catch(_ => null);
-          if (res && res.retcode === 0) {
-            updateGlobalStateFromJWT(res.data.token);
-            await setAsyncStorage("token", res.data.token);
-            console.log("logok")
-            return "LoggedInScreen";
-            // initScreen = "LoggedInScreen";
-          }
-        }
-      }
-      return "LoginScreen";
-    }
-
-    checkLoginState().then(res => this.setState({initScreen: res}))
-    console.log(this.state.initScreen)
-  }
-
-  render() {
-    return (
-      <NavigationContainer>
-        <RootStack.Navigator initialRouteName={this.state.initScreen}>
-          <RootStack.Screen name="LoggedInScreen" component={LoggedInScreen} options={{headerShown: false}}/>
-          <RootStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}}/>
-        </RootStack.Navigator>
-      </NavigationContainer>
-    );
-  }
-}
 
 const App = () => {
   // const [isLogin, setIsLogin] = React.useState(false);

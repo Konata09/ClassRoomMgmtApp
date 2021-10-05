@@ -1,18 +1,14 @@
 import React, {useState} from "react";
 import {Alert, Button, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
-// @ts-ignore
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {API, GlobalState} from "../App";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/Ionicons";
 
 // @ts-ignore
 export function HomeScreen({navigation, route}) {
   const [isGetInit, setIsGetInit] = React.useState(false);
   const [tickets, setTickets] = React.useState([])
-  const toAddTicket = () => {
-    navigation.navigate("新建工单")
-  }
   React.useEffect(() => {
     if (!isGetInit) {
       API.getMyTicketGet({userid: GlobalState.uid.toString()})
@@ -37,7 +33,7 @@ export function HomeScreen({navigation, route}) {
     navigation.navigate('LoggedInScreen', {screen: 'Ticket'});
   }
 
-  const TicketComponent = (props) => {
+  const TicketComponent = (props: object) => {
     return (
       <TouchableOpacity onPress={() => handleTouch(props.ticket.id)}>
         <View style={Styles.ticketCard}>

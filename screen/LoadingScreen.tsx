@@ -12,37 +12,25 @@ const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 // @ts-ignore
 export function LoadingScreen({navigation, route}) {
   useEffect(() => {
-    // let isLogin = false;
     async function checkLoginState() {
       const token = await getAsyncStorage("token");
       if (token) {
         updateGlobalStateFromJWT(token);
-        if (GlobalState.tokenExp > Math.floor((Date.now() + 60000)/1000)) { // 如果 Token 将在 1 分钟内过期 那么重新登录
+        if (GlobalState.tokenExp > Math.floor((Date.now() + 60000) / 1000)) { // 如果 Token 将在 1 分钟内过期 那么重新登录
           const res = await API.refreshPost({inlineObject11: {username: GlobalState.username, uid: GlobalState.uid}})
             .catch(_ => null);
           if (res && res.retcode === 0) {
             updateGlobalStateFromJWT(res.data.token);
             await setAsyncStorage("token", res.data.token);
             navigation.navigate("LoggedInScreen");
-            // isLogin = true;
-            // setIsLogin(true);
-            // initScreen = "LoggedInScreen";
+            return
           }
         }
       }
-      // navigation.navigate("LoginScreen");
+      navigation.navigate("LoginScreen");
     }
-    checkLoginState().then(()=>{
-      // console.log(isLogin)
-      // console.log("islogin: "+isLogin)
-      // if (!isLogin){
-      //   navigation.navigate("LoginScreen");
-      // }
-    })
-    // let initScreen = "LoginScreen";
+    checkLoginState()
   }, [])
-
-
 
   const {style} = animateTransform({
     type: 'rotate',
