@@ -20,7 +20,7 @@ import {exists, mapValues} from './runtime';
  * @interface InlineObject
  */
 export interface InlineObject14 {
-  id: number;
+  id: string;
 }
 
 export function InlineObject14FromJSON(json: any): InlineObject14 {

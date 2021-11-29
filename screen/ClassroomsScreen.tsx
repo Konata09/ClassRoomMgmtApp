@@ -22,6 +22,7 @@ export const getControllerColor = (status: number) => {
       return Colors.iosPurple
   }
 }
+
 // @ts-ignore
 export function ClassroomsScreen({navigation, route}) {
   const [classStatus, setClassStatus] = React.useState({});
@@ -107,6 +108,7 @@ export function ClassroomsScreen({navigation, route}) {
       </View>
     )
   }
+
   let groupCount = Object.keys(groups).length
   let ClassroomsGroups = new Array(groupCount + 1)
   for (let i = 1; i < groupCount + 1; i++) {

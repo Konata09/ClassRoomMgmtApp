@@ -1,87 +1,87 @@
 import React, {useState} from "react";
-import {Alert, Animated, Button, ScrollView, SectionList, Text, TextInput, View} from "react-native";
+import {
+  Alert,
+  Button, Modal, Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import {Colors, Styles} from "../styles";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Ionicons";
 import {API, GlobalState} from "../App";
 import {Picker} from "@react-native-picker/picker";
 
-let userData = {}
-
 // @ts-ignore
-export function ChangeDutyUserScreen() {
-  // const rowColorArray = new Array(20)
-  // rowColorArray.fill(Colors.highlightBg)
-  // const [rowColor, setRowColor] = useState(rowColorArray)
-  const dutyData_ = {
-    monday_1: 0,
-    monday_1_name: "",
-    monday_2: 0,
-    monday_2_name: "",
-    monday_3: 0,
-    monday_3_name: "",
-    tuesday_1: 0,
-    tuesday_1_name: "",
-    tuesday_2: 0,
-    tuesday_2_name: "",
-    tuesday_3: 0,
-    tuesday_3_name: "",
-    wednesday_1: 0,
-    wednesday_1_name: "",
-    wednesday_2: 0,
-    wednesday_2_name: "",
-    wednesday_3: 0,
-    wednesday_3_name: "",
-    thursday_1: 0,
-    thursday_1_name: "",
-    thursday_2: 0,
-    thursday_2_name: "",
-    thursday_3: 0,
-    thursday_3_name: "",
-    friday_1: 0,
-    friday_1_name: "",
-    friday_2: 0,
-    friday_2_name: "",
-    friday_3: 0,
-    friday_3_name: "",
-  }
-  const [dutyData, setDutyData] = React.useState(dutyData_);
-  const [changed, setChanged] = React.useState(false);
+export function ChangeDutyUserScreen({navigation}) {
+  const [mondayDutyData, setMondayDutyData] = React.useState([]);
+  const [tuesdayDutyData, setTuesdayDutyData] = React.useState([]);
+  const [wednesdayDutyData, setWednesdayDutyData] = React.useState([]);
+  const [thursdayDutyData, setThursdayDutyData] = React.useState([]);
+  const [fridayDutyData, setFridayDutyData] = React.useState([]);
+  const [saturdayDutyData, setSaturdayDutyData] = React.useState([]);
+  const [sundayDutyData, setSundayDutyData] = React.useState([]);
+  const [userData, setUserData] = React.useState([]);
+  const [updateDutyUid, setUpdateDutyUid] = React.useState(1);
+  const [addDutyUid, setAddDutyUid] = React.useState(1);
+  const [updateDutyId, setUpdateDutyId] = React.useState("");
+  const [updateDutyDay, setUpdateDutyDay] = React.useState("Monday");
+  const [addDutyDay, setAddDutyDay] = React.useState("Monday");
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={() => setAddModalVisible(true)} title="添加"/>
+      ),
+    });
+  }, [navigation]);
+
+  // 更新数据
   React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    // 获取值班表数据
     API.getDutyCalendarGet({})
       .then((res) => {
-        // @ts-ignore
-        console.debug(res.data)
-        // @ts-ignore
-        setDutyData(res.data)
+        console.debug(res.data);
+        setMondayDutyData(res.data.monday);
+        setTuesdayDutyData(res.data.tuesday);
+        setWednesdayDutyData(res.data.wednesday);
+        setThursdayDutyData(res.data.thursday);
+        setFridayDutyData(res.data.friday);
+        setSaturdayDutyData(res.data.saturday);
+        setSundayDutyData(res.data.sunday);
       })
       .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
-  }, []);
-
-  React.useEffect(() => {
+    // 获取所有用户UID和用户名
     API.adminSetUserGet({})
       .then((res) => {
-        // @ts-ignore
-        console.debug(res.data)
-        // @ts-ignore
-        userData = res.data
+        setUserData(res.data);
       })
       .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
-  }, []);
+  }
 
-  React.useEffect(() => {
-    if (changed) {
-      setChanged(false);
-      API.setDutyPost({
-        inlineObject: dutyData
-      })
-        .then((res) => {
-          console.debug(res)
-        })
-        .catch(e => Alert.alert("提交修改失败", e.message + ' ' + e.status));
-    }
-  }, [changed]);
+  // 修改值班人
+  const updateDutyUser = (id: string, uid: number, day: string) => {
+    API.setDutyPost({inlineObject: {uid: uid, id: id, day: day}})
+      .then(res => res.retcode === 0 ? Alert.alert("修改成功") : Alert.alert("修改失败", res.message))
+      .then(() => fetchData())
+      .catch(e => Alert.alert("修改失败", e.message + ' ' + e.status));
+  }
+
+  // 新增值班人
+  const addDutyUser = (uid: number, day: string) => {
+    API.setDutyPut({inlineObject13: {uid: uid, day: day}})
+      .then(res => res.retcode === 0 ? Alert.alert("添加成功") : Alert.alert("添加失败", res.message))
+      .then(() => fetchData())
+      .catch(e => Alert.alert("添加失败", e.message + ' ' + e.status));
+  }
 
   let pickerItems = [];
   // @ts-ignore
@@ -90,243 +90,215 @@ export function ChangeDutyUserScreen() {
     pickerItems.push(<Picker.Item key={i} value={userData.users[i].uid} label={userData.users[i].username}/>)
   }
 
+  // 点击值班人员的弹窗
+  const handleTouch = (id: string, uid: number, day: string) => {
+    Alert.alert(`选择操作`, undefined, [{
+      text: "删除",
+      onPress: () => API.setDutyDelete({inlineObject14: {id: id}}) && fetchData(),
+      style: "destructive"
+    }, {
+      text: "修改",
+      onPress: () => {
+        setUpdateDutyUid(uid);
+        setUpdateDutyDay(day);
+        setUpdateDutyId(id);
+        setEditModalVisible(true);
+      }
+    }, {
+      text: "取消",
+      onPress: () => null,
+      style: "cancel"
+    }])
+  }
+
+  const EditModal = () => {
+    return (
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={editModalVisible}
+          onRequestClose={() => {
+            setEditModalVisible(!editModalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>修改值班人</Text>
+              <Picker
+                style={{backgroundColor: Colors.highlightBg, width: 200}}
+                selectedValue={updateDutyUid}
+                onValueChange={(itemValue, itemIndex) => {
+                  setUpdateDutyUid(itemValue);
+                }}>
+                {pickerItems}
+              </Picker>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                  updateDutyUser(updateDutyId, updateDutyUid, updateDutyDay);
+                  setEditModalVisible(!editModalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>保存</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    )
+  }
+
+  const AddModal = () => {
+    return (
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={addModalVisible}
+          onRequestClose={() => {
+            setAddModalVisible(!addModalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>新增值班人</Text>
+              <Picker
+                style={{backgroundColor: Colors.highlightBg, width: 200}}
+                selectedValue={addDutyUid}
+                onValueChange={(itemValue, itemIndex) => {
+                  setAddDutyUid(itemValue);
+                }}>
+                {pickerItems}
+              </Picker>
+              <Picker
+                style={{backgroundColor: Colors.highlightBg, width: 200}}
+                selectedValue={addDutyDay}
+                onValueChange={(itemValue, itemIndex) => {
+                  setAddDutyDay(itemValue);
+                }}>
+                <Picker.Item label="星期一" value="Monday" key={1}/>
+                <Picker.Item label="星期二" value="Tuesday" key={2}/>
+                <Picker.Item label="星期三" value="Wednesday" key={3}/>
+                <Picker.Item label="星期四" value="Thursday" key={4}/>
+                <Picker.Item label="星期五" value="Friday" key={5}/>
+                <Picker.Item label="星期六" value="Saturday" key={6}/>
+                <Picker.Item label="星期日" value="Sunday" key={7}/>
+              </Picker>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                  addDutyUser(addDutyUid, addDutyDay);
+                  setAddModalVisible(!addModalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>保存</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    )
+  }
+
+  const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 11,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    button: {
+      borderRadius: 11,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    }
+  });
+
   return (
     <ScrollView>
       <View style={Styles.listContainer}>
         <View style={Styles.sectionHeader}><Text>星期一</Text></View>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["monday_1"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                monday_1: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
+        {mondayDutyData.map((o, i) => {
+          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Monday")}>
+            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
+          </TouchableOpacity>
+        })}
+        <View style={Styles.sectionHeader}><Text>星期二</Text></View>
         <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["monday_2"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                monday_2: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
+        {tuesdayDutyData.map((o, i) => {
+          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Tuesday")}>
+            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
+          </TouchableOpacity>
+        })}
+        <View style={Styles.sectionHeader}><Text>星期三</Text></View>
         <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["monday_3"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                monday_3: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.sectionHeader}>
-          <Text>星期二</Text>
-        </View>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["tuesday_1"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                tuesday_1: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
+        {wednesdayDutyData.map((o, i) => {
+          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Wednesday")}>
+            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
+          </TouchableOpacity>
+        })}
+        <View style={Styles.sectionHeader}><Text>星期四</Text></View>
         <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["tuesday_2"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                tuesday_2: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
+        {thursdayDutyData.map((o, i) => {
+          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Thursday")}>
+            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
+          </TouchableOpacity>
+        })}
+        <View style={Styles.sectionHeader}><Text>星期五</Text></View>
         <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["thursday_3"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                thursday_3: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.sectionHeader}>
-          <Text>星期三</Text>
-        </View>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["wednesday_1"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                wednesday_1: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
+        {fridayDutyData.map((o, i) => {
+          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Friday")}>
+            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
+          </TouchableOpacity>
+        })}
+        <View style={Styles.sectionHeader}><Text>星期六</Text></View>
         <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["wednesday_2"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                wednesday_2: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
+        {saturdayDutyData.map((o, i) => {
+          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Saturday")}>
+            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
+          </TouchableOpacity>
+        })}
+        <View style={Styles.sectionHeader}><Text>星期日</Text></View>
         <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["wednesday_3"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                wednesday_3: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.sectionHeader}>
-          <Text>星期四</Text>
-        </View>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["thursday_1"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                thursday_1: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["thursday_2"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                thursday_2: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["thursday_3"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                thursday_3: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.sectionHeader}>
-          <Text>星期五</Text>
-        </View>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["friday_1"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                friday_1: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["friday_2"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                friday_2: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.dutyRow}>
-          <Picker
-            style={{backgroundColor: Colors.highlightBg}}
-            selectedValue={dutyData["friday_3"]}
-            onValueChange={(itemValue, itemIndex) => {
-              setDutyData(prevState => ({
-                ...prevState,
-                friday_3: itemValue
-              }))
-              setChanged(true);
-            }}>
-            {pickerItems}
-          </Picker>
-        </View>
+        {sundayDutyData.map((o, i) => {
+          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Sunday")}>
+            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
+          </TouchableOpacity>
+        })}
       </View>
+      <AddModal/>
+      <EditModal/>
     </ScrollView>
   );
 }

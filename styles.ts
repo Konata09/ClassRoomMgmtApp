@@ -123,8 +123,8 @@ export const Styles = StyleSheet.create({
     backgroundColor: Colors.deepBg,
     paddingTop: 5,
     paddingBottom: 5,
-    paddingLeft: 14,
-    paddingRight: 14
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   classroomSectionHeader: {
     backgroundColor: Colors.highlightBg,
@@ -135,7 +135,10 @@ export const Styles = StyleSheet.create({
   },
   dutyRow: {
     backgroundColor: Colors.highlightBg,
-    paddingLeft: 7
+    paddingLeft: 20,
+    fontSize: 17,
+    height: 34,
+    justifyContent: "center"
   },
   dutyText: {
     fontSize: 18,

@@ -13,10 +13,10 @@ const MyStack = createStackNavigator();
 // @ts-ignore
 export function ClassroomsStackScreen({navigation, route}) {
   return (
-    <MyStack.Navigator initialRouteName="Classrooms">
-      <MyStack.Screen name="Classrooms" component={ClassroomsScreen} options={{headerShown: false}}/>
-      <MyStack.Screen name="ClassroomStatus" component={ClassroomStatusScreen} options={{headerShown: false}}/>
-      <MyStack.Screen name="ClassroomDetail" component={ClassroomDetailScreen} options={{headerShown: false}}/>
+    <MyStack.Navigator initialRouteName="Classrooms" screenOptions={{headerShown: false}}>
+      <MyStack.Screen name="Classrooms" component={ClassroomsScreen}/>
+      <MyStack.Screen name="ClassroomStatus" component={ClassroomStatusScreen}/>
+      <MyStack.Screen name="ClassroomDetail" component={ClassroomDetailScreen}/>
     </MyStack.Navigator>
   );
 }

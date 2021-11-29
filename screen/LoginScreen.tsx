@@ -19,7 +19,7 @@ export function LoginScreen({navigation, route}) {
             onPress: () => null,
             style: "cancel"
           },
-          {text: "确定", onPress: () => BackHandler.exitApp()}
+          {text: "退出", onPress: () => BackHandler.exitApp()}
         ]);
         return true;
       };
@@ -27,34 +27,6 @@ export function LoginScreen({navigation, route}) {
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     }, []));
-
-  // useEffect(() => {
-  //   let isLogin = false;
-  //   async function checkLoginState() {
-  //     const token = await getAsyncStorage("token");
-  //     if (token) {
-  //       updateGlobalStateFromJWT(token);
-  //       if (GlobalState.tokenExp > Math.floor((Date.now() + 60000)/1000)) { // 如果 Token 将在 1 分钟内过期 那么重新登录
-  //         const res = await API.refreshPost({inlineObject11: {username: GlobalState.username, uid: GlobalState.uid}})
-  //           .catch(_ => null);
-  //         if (res && res.retcode === 0) {
-  //           updateGlobalStateFromJWT(res.data.token);
-  //           await setAsyncStorage("token", res.data.token);
-  //           isLogin = true;
-  //           // setIsLogin(true);
-  //           // initScreen = "LoggedInScreen";
-  //         }
-  //       }
-  //     }
-  //   }
-  //   checkLoginState().then(()=>{
-  //     console.log(isLogin)
-  //     if (isLogin){
-  //       navigation.navigate("LoggedInScreen");
-  //     }
-  //   })
-  //   // let initScreen = "LoginScreen";
-  // }, [])
 
   const submitLogin = (): Promise<object> => {
     return API.loginPost({inlineObject3: {username: username, password: password}});
