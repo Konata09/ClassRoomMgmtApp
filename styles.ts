@@ -327,9 +327,11 @@ export const Styles = StyleSheet.create({
     textAlignVertical: "top"
   },
   smallRightPicker: {
-    height: 10,
+    right: 0,
+    height: 5,
     width: 150,
-    backgroundColor: Colors.highlightBg,
+    // backgroundColor: Colors.highlightBg,
+
     color: Colors.lightText
   },
   inRowPickerWrapper: {

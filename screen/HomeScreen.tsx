@@ -5,7 +5,6 @@ import {API, GlobalState} from "../App";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/Ionicons";
 
-// @ts-ignore
 export function HomeScreen({navigation}) {
   const [isGetInit, setIsGetInit] = React.useState(false);
   const [tickets, setTickets] = React.useState([]);
@@ -42,14 +41,9 @@ export function HomeScreen({navigation}) {
     }
   }, []);
 
-  const handleTouch = (t: number) => {
-    // navigation.push("Ticket Detail", {ticket: t})
-    navigation.navigate('LoggedInScreen', {screen: 'Ticket'});
-  }
-
   const TicketComponent = (props: object) => {
     return (
-      <TouchableOpacity onPress={() => handleTouch(props.ticket.id)}>
+      <TouchableOpacity onPress={() => navigation.navigate("TicketDetailScreen", {ticket: props.ticket.id})}>
         <View style={Styles.ticketCard}>
           <View style={{flexDirection: "row", alignItems: "center"}}>
             {props.ticket.severity === 1 ?

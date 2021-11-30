@@ -111,6 +111,7 @@ export function AddTicketScreen({navigation, route}) {
             <View style={Styles.inRowPickerWrapper}>
               <Picker
                 style={Styles.smallRightPicker}
+                dropdownIconColor={Colors.deepBg}
                 selectedValue={severity}
                 onValueChange={(itemValue, itemIndex) =>
                   setSeverity(itemValue)
@@ -143,6 +144,7 @@ export function AddTicketScreen({navigation, route}) {
             <View style={Styles.inRowPickerWrapper}>
               <Picker
                 style={Styles.smallRightPicker}
+                dropdownIconColor={Colors.deepBg}
                 selectedValue={dutyUser1}
                 onValueChange={(itemValue, itemIndex) =>
                   setDutyUser1(itemValue)
@@ -157,6 +159,7 @@ export function AddTicketScreen({navigation, route}) {
             <View style={Styles.inRowPickerWrapper}>
               <Picker
                 style={Styles.smallRightPicker}
+                dropdownIconColor={Colors.deepBg}
                 selectedValue={dutyUser2}
                 onValueChange={(itemValue, itemIndex) =>
                   setDutyUser2(itemValue)
@@ -172,6 +175,7 @@ export function AddTicketScreen({navigation, route}) {
             <View style={Styles.inRowPickerWrapper}>
               <Picker
                 style={Styles.smallRightPicker}
+                dropdownIconColor={Colors.deepBg}
                 selectedValue={dutyUser3}
                 onValueChange={(itemValue, itemIndex) =>
                   setDutyUser3(itemValue)

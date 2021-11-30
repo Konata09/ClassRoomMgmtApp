@@ -1,12 +1,9 @@
-import React, {useState} from "react";
-import {Alert, Appearance, Button, ScrollView, Text, TextInput, View} from "react-native";
+import React from "react";
+import {Alert, Button, ScrollView, Text, View} from "react-native";
 import {Colors, Styles} from "../styles";
-// @ts-ignore
-import Icon from "react-native-vector-icons/Ionicons";
 import {API, GlobalState} from "../App";
 
 
-// @ts-ignore
 export function TicketDetailScreen({navigation, route}) {
   const {ticket} = route.params;
   const [isGetInit, setIsGetInit] = React.useState(false);
@@ -78,28 +75,41 @@ export function TicketDetailScreen({navigation, route}) {
         </View>
         <View style={Styles.menuCutoff}/>
         <View style={Styles.menuRowViewNew}>
-          <Text style={Styles.menuText}>负责人1</Text>
+          <Text style={Styles.menuText}>负责人</Text>
           <Text
             style={Styles.infoTextInRow}>{ticketDetail.duty_user_1_name}</Text>
         </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.menuRowViewNew}>
-          <Text style={Styles.menuText}>负责人2</Text>
-          <Text
-            style={Styles.infoTextInRow}>{ticketDetail.duty_user_2_name}</Text>
-        </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.menuRowViewNew}>
-          <Text style={Styles.menuText}>负责人3</Text>
-          <Text
-            style={Styles.infoTextInRow}>{ticketDetail.duty_user_3_name}</Text>
-        </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.menuRowViewNew}>
-          <Text style={Styles.menuText}>完成人</Text>
-          <Text
-            style={Styles.infoTextInRow}>{ticketDetail.complete_user_name}</Text>
-        </View>
+        {ticketDetail.duty_user_2 !== 0 ?
+          <>
+            <View style={Styles.menuCutoff}/>
+            <View style={Styles.menuRowViewNew}>
+              <Text style={Styles.menuText}>负责人</Text>
+              <Text
+                style={Styles.infoTextInRow}>{ticketDetail.duty_user_2_name}</Text>
+            </View>
+          </> : <></>
+        }
+
+        {ticketDetail.duty_user_3 !== 0 ?
+          <>
+            <View style={Styles.menuCutoff}/>
+            <View style={Styles.menuRowViewNew}>
+              <Text style={Styles.menuText}>负责人</Text>
+              <Text
+                style={Styles.infoTextInRow}>{ticketDetail.duty_user_3_name}</Text>
+            </View>
+          </> : <></>
+        }
+        {ticketDetail.status === 1 ?
+          <>
+            <View style={Styles.menuCutoff}/>
+            <View style={Styles.menuRowViewNew}>
+              <Text style={Styles.menuText}>完成人</Text>
+              <Text
+                style={Styles.infoTextInRow}>{ticketDetail.complete_user_name}</Text>
+            </View>
+          </> : <></>
+        }
         <View style={Styles.menuCutoff}/>
         <View style={Styles.menuRowViewNew}>
           <Text style={Styles.menuText}>创建时间</Text>
@@ -112,12 +122,16 @@ export function TicketDetailScreen({navigation, route}) {
           <Text
             style={Styles.infoTextInRow}>{ticketDetail.start_time}</Text>
         </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.menuRowViewNew}>
-          <Text style={Styles.menuText}>完成时间</Text>
-          <Text
-            style={Styles.infoTextInRow}>{ticketDetail.complete_time}</Text>
-        </View>
+        {ticketDetail.status === 1 ?
+          <>
+            <View style={Styles.menuCutoff}/>
+            <View style={Styles.menuRowViewNew}>
+              <Text style={Styles.menuText}>完成时间</Text>
+              <Text
+                style={Styles.infoTextInRow}>{ticketDetail.complete_time}</Text>
+            </View>
+          </> : <></>
+        }
       </View>
       {GlobalState.isAdmin ? <>
         <View style={Styles.menuContainer}>
