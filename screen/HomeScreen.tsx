@@ -6,13 +6,15 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export function HomeScreen({navigation}) {
-  const [isGetInit, setIsGetInit] = React.useState(false);
   const [tickets, setTickets] = React.useState([]);
   const [todayDuty, setTodayDuty] = React.useState([]);
   const todayDutyColor = [Colors.iosBlue, Colors.iosViolet, Colors.iosPurple, Colors.iosSkyBlue, Colors.iosGreen, Colors.iosYellow, Colors.iosOrange, Colors.iosCarmine];
 
   React.useEffect(() => {
     fetchData();
+    return navigation.addListener('focus', () => {
+      fetchData();
+    });
   }, []);
 
   const fetchData = () => {

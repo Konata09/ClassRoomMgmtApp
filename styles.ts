@@ -331,7 +331,6 @@ export const Styles = StyleSheet.create({
     height: 5,
     width: 150,
     // backgroundColor: Colors.highlightBg,
-
     color: Colors.lightText
   },
   inRowPickerWrapper: {
@@ -400,5 +399,49 @@ export const Styles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 10,
     backgroundColor: Colors.deepBg
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 11,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 10
+  },
+  button: {
+    borderRadius: 11,
+    padding: 8,
+    elevation: 2
+  },
+  buttonClose: {
+    backgroundColor: Colors.iosBlue,
+  },
+  textStyle: {
+    color: "#fff",
+    textAlign: "center",
+    width: 50
+  },
+  modalText: {
+    marginBottom: 15,
+    fontWeight: "bold",
+    fontSize: 18,
+    textAlign: "center"
+  },
+  modalPicker: {
+    backgroundColor: Colors.highlightBg,
+    width: 200
   }
 });

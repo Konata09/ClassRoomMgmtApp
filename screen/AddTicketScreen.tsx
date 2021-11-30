@@ -1,15 +1,11 @@
 import React, {useState} from "react";
 import {Alert, Button, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
-// @ts-ignore
-import Icon from "react-native-vector-icons/Ionicons";
 import {API, GlobalState} from "../App";
 import {Picker} from "@react-native-picker/picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-
-// @ts-ignore
-export function AddTicketScreen({navigation, route}) {
+export function AddTicketScreen({navigation}) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isGetInit, setIsGetInit] = React.useState(false);
   const [severity, setSeverity] = useState(1);
@@ -27,7 +23,6 @@ export function AddTicketScreen({navigation, route}) {
     if (!isGetInit) {
       API.adminSetUserGet({})
         .then((res) => {
-          // @ts-ignore
           setUserData(res.data)
           setIsGetInit(true)
         })
@@ -166,7 +161,6 @@ export function AddTicketScreen({navigation, route}) {
                 {pickerItems}
               </Picker>
             </View>
-            {/*<Text style={Styles.infoTextInRow}>234</Text>*/}
           </View>
           <View style={Styles.menuCutoff}/>
           <View style={Styles.menuRowViewNew}>

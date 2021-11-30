@@ -6,7 +6,6 @@ import {API} from "../App";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export function TicketScreen({navigation}) {
-  const [isGetInit, setIsGetInit] = React.useState(false);
   const [tickets, setTickets] = React.useState([])
   const [refreshing, setRefreshing] = React.useState(false)
   const toAddTicket = () => {
@@ -24,7 +23,6 @@ export function TicketScreen({navigation}) {
     API.getTicketsGet({})
       .then((res) => {
         setTickets(res.data)
-        setIsGetInit(true)
         setRefreshing(false)
       })
       .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));

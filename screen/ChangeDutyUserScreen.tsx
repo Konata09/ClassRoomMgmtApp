@@ -1,17 +1,9 @@
 import React, {useState} from "react";
-import {
-  Alert,
-  Button, Modal, Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import {Alert, Button, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Ionicons";
-import {API, GlobalState} from "../App";
+import {API} from "../App";
 import {Picker} from "@react-native-picker/picker";
 
 // @ts-ignore
@@ -23,7 +15,6 @@ export function ChangeDutyUserScreen({navigation}) {
   const [fridayDutyData, setFridayDutyData] = React.useState([]);
   const [saturdayDutyData, setSaturdayDutyData] = React.useState([]);
   const [sundayDutyData, setSundayDutyData] = React.useState([]);
-  const [userData, setUserData] = React.useState([]);
   const [updateDutyUid, setUpdateDutyUid] = React.useState(1);
   const [addDutyUid, setAddDutyUid] = React.useState(1);
   const [updateDutyId, setUpdateDutyId] = React.useState("");
@@ -31,6 +22,8 @@ export function ChangeDutyUserScreen({navigation}) {
   const [addDutyDay, setAddDutyDay] = React.useState("Monday");
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
+  const [pickerItems, setPickerItems] = useState([]);
+  const [userData, setUserData] = useState({});
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,6 +37,17 @@ export function ChangeDutyUserScreen({navigation}) {
   React.useEffect(() => {
     fetchData();
   }, []);
+
+  React.useEffect(() => {
+    if (userData.users) {
+      const p = [];
+      for (let i = 0; i < userData.count; i++) {
+        p.push(<Picker.Item key={i} value={userData.users[i].uid} label={userData.users[i].username}/>);
+      }
+      p.push(<Picker.Item key={255} value={0} label={"不指定"}/>);
+      setPickerItems(p);
+    }
+  }, [userData])
 
   const fetchData = () => {
     // 获取值班表数据
@@ -83,13 +87,6 @@ export function ChangeDutyUserScreen({navigation}) {
       .catch(e => Alert.alert("添加失败", e.message + ' ' + e.status));
   }
 
-  let pickerItems = [];
-  // @ts-ignore
-  for (let i = 0; i < userData.count; i++) {
-    // @ts-ignore
-    pickerItems.push(<Picker.Item key={i} value={userData.users[i].uid} label={userData.users[i].username}/>)
-  }
-
   // 点击值班人员的弹窗
   const handleTouch = (id: string, uid: number, day: string) => {
     Alert.alert(`选择操作`, undefined, [{
@@ -113,7 +110,7 @@ export function ChangeDutyUserScreen({navigation}) {
 
   const EditModal = () => {
     return (
-      <View style={styles.centeredView}>
+      <View style={Styles.centeredView}>
         <Modal
           animationType="fade"
           transparent={true}
@@ -122,11 +119,11 @@ export function ChangeDutyUserScreen({navigation}) {
             setEditModalVisible(!editModalVisible);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>修改值班人</Text>
+          <View style={Styles.centeredView}>
+            <View style={Styles.modalView}>
+              <Text style={Styles.modalText}>修改值班人</Text>
               <Picker
-                style={{backgroundColor: Colors.highlightBg, width: 200}}
+                style={Styles.modalPicker}
                 selectedValue={updateDutyUid}
                 onValueChange={(itemValue, itemIndex) => {
                   setUpdateDutyUid(itemValue);
@@ -134,13 +131,13 @@ export function ChangeDutyUserScreen({navigation}) {
                 {pickerItems}
               </Picker>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={[Styles.button, Styles.buttonClose]}
                 onPress={() => {
                   updateDutyUser(updateDutyId, updateDutyUid, updateDutyDay);
                   setEditModalVisible(!editModalVisible);
                 }}
               >
-                <Text style={styles.textStyle}>保存</Text>
+                <Text style={Styles.textStyle}>保存</Text>
               </Pressable>
             </View>
           </View>
@@ -151,7 +148,7 @@ export function ChangeDutyUserScreen({navigation}) {
 
   const AddModal = () => {
     return (
-      <View style={styles.centeredView}>
+      <View style={Styles.centeredView}>
         <Modal
           animationType="fade"
           transparent={true}
@@ -160,11 +157,11 @@ export function ChangeDutyUserScreen({navigation}) {
             setAddModalVisible(!addModalVisible);
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>新增值班人</Text>
+          <View style={Styles.centeredView}>
+            <View style={Styles.modalView}>
+              <Text style={Styles.modalText}>新增值班人</Text>
               <Picker
-                style={{backgroundColor: Colors.highlightBg, width: 200}}
+                style={Styles.modalPicker}
                 selectedValue={addDutyUid}
                 onValueChange={(itemValue, itemIndex) => {
                   setAddDutyUid(itemValue);
@@ -186,13 +183,13 @@ export function ChangeDutyUserScreen({navigation}) {
                 <Picker.Item label="星期日" value="Sunday" key={7}/>
               </Picker>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={[Styles.button, Styles.buttonClose]}
                 onPress={() => {
                   addDutyUser(addDutyUid, addDutyDay);
                   setAddModalVisible(!addModalVisible);
                 }}
               >
-                <Text style={styles.textStyle}>保存</Text>
+                <Text style={Styles.textStyle}>保存</Text>
               </Pressable>
             </View>
           </View>
@@ -201,49 +198,7 @@ export function ChangeDutyUserScreen({navigation}) {
     )
   }
 
-  const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      borderRadius: 11,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    button: {
-      borderRadius: 11,
-      padding: 10,
-      elevation: 2
-    },
-    buttonOpen: {
-      backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-      backgroundColor: "#2196F3",
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center"
-    }
-  });
+  const styles = StyleSheet.create({});
 
   return (
     <ScrollView>

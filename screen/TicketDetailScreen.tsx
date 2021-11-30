@@ -1,26 +1,53 @@
-import React from "react";
-import {Alert, Button, ScrollView, Text, View} from "react-native";
+import React, {useState} from "react";
+import {Alert, Button, Modal, Pressable, ScrollView, Text, View} from "react-native";
 import {Colors, Styles} from "../styles";
 import {API, GlobalState} from "../App";
-
+import {Picker} from "@react-native-picker/picker";
 
 export function TicketDetailScreen({navigation, route}) {
   const {ticket} = route.params;
   const [isGetInit, setIsGetInit] = React.useState(false);
-  const [ticketDetail, setTicketDetail] = React.useState({})
+  const [ticketDetail, setTicketDetail] = React.useState({});
+  const [changeDutyModalVisible, setChangeDutyModalVisible] = React.useState(false);
+  const [updateDutyUid1, setUpdateDutyUid1] = React.useState(0);
+  const [updateDutyUid2, setUpdateDutyUid2] = React.useState(0);
+  const [updateDutyUid3, setUpdateDutyUid3] = React.useState(0);
+  const [pickerItems, setPickerItems] = useState([]);
+  const [userData, setUserData] = useState({});
 
   React.useEffect(() => {
     if (!isGetInit) {
-      API.getTicketDetailGet({id: ticket})
-        .then(res => {
-          setTicketDetail(res.data)
-          setIsGetInit(true)
-          console.debug(ticketDetail)
-        })
-        .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+      fetchData();
     }
   });
 
+  React.useEffect(() => {
+    if (userData.users) {
+      const p = [];
+      for (let i = 0; i < userData.count; i++) {
+        p.push(<Picker.Item key={i} value={userData.users[i].uid} label={userData.users[i].username}/>);
+      }
+      p.push(<Picker.Item key={255} value={0} label={"不指定"}/>);
+      setPickerItems(p);
+    }
+  }, [userData])
+
+  const fetchData = () => {
+    API.getTicketDetailGet({id: ticket})
+      .then(res => {
+        setTicketDetail(res.data)
+        setIsGetInit(true)
+        console.debug(ticketDetail)
+      })
+      .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+
+    API.adminSetUserGet({})
+      .then((res) => {
+        setUserData(res.data)
+        setIsGetInit(true)
+      })
+      .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+  }
   const handleDone = () => {
     API.setTicketStatusPost({inlineObject1: {id: ticket, status: 1}})
       .then(res => {
@@ -36,6 +63,80 @@ export function TicketDetailScreen({navigation, route}) {
         navigation.goBack();
       })
       .catch(e => Alert.alert("删除失败", e.message + ' ' + e.status));
+  }
+
+  const handleChangeDuty = () => {
+    setUpdateDutyUid1(ticketDetail.duty_user_1);
+    setUpdateDutyUid2(ticketDetail.duty_user_2);
+    setUpdateDutyUid3(ticketDetail.duty_user_3);
+    setChangeDutyModalVisible(true);
+  }
+
+  const handleChangeDutySubmit = () => {
+    API.adminSetTicketDutyUserPost({
+      inlineObject4: {
+        id: ticketDetail.id,
+        dutyUser1: updateDutyUid1,
+        dutyUser2: updateDutyUid2,
+        dutyUser3: updateDutyUid3
+      }
+    })
+      .then(res => res.retcode === 0 ? Alert.alert("修改成功") : Alert.alert("修改失败", res.message))
+      .then(() => fetchData())
+      .catch(e => Alert.alert("修改失败", e.message + ' ' + e.status));
+  }
+  const ChangeDutyModal = () => {
+    return (
+      <View style={Styles.centeredView}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={changeDutyModalVisible}
+          onRequestClose={() => {
+            setChangeDutyModalVisible(!changeDutyModalVisible);
+          }}
+        >
+          <View style={Styles.centeredView}>
+            <View style={Styles.modalView}>
+              <Text style={Styles.modalText}>修改负责人</Text>
+              <Picker
+                style={Styles.modalPicker}
+                selectedValue={updateDutyUid1}
+                onValueChange={(itemValue, itemIndex) => {
+                  setUpdateDutyUid1(itemValue);
+                }}>
+                {pickerItems}
+              </Picker>
+              <Picker
+                style={Styles.modalPicker}
+                selectedValue={updateDutyUid2}
+                onValueChange={(itemValue, itemIndex) => {
+                  setUpdateDutyUid2(itemValue);
+                }}>
+                {pickerItems}
+              </Picker>
+              <Picker
+                style={Styles.modalPicker}
+                selectedValue={updateDutyUid3}
+                onValueChange={(itemValue, itemIndex) => {
+                  setUpdateDutyUid3(itemValue);
+                }}>
+                {pickerItems}
+              </Picker>
+              <Pressable
+                style={[Styles.button, Styles.buttonClose]}
+                onPress={() => {
+                  handleChangeDutySubmit();
+                  setChangeDutyModalVisible(!changeDutyModalVisible);
+                }}
+              >
+                <Text style={Styles.textStyle}>保存</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    )
   }
 
   return (
@@ -138,18 +239,20 @@ export function TicketDetailScreen({navigation, route}) {
         }
       </View>
       {GlobalState.isAdmin ? <>
+        {ticketDetail.status === 0 ?
+          <View style={Styles.menuContainer}>
+            <Button title="完成工单" color={Colors.iosBlue} onPress={() => handleDone()}/>
+          </View>
+          : <></>
+        }
         <View style={Styles.menuContainer}>
-          <Button title="完成工单" color={Colors.iosBlue} onPress={() => handleDone()}/>
-        </View>
-        <View style={Styles.menuContainer}>
-          <Button title="修改负责人" color={Colors.iosBlue} onPress={() => handleDone()}/>
+          <Button title="修改负责人" color={Colors.iosBlue} onPress={() => handleChangeDuty()}/>
         </View>
         <View style={[Styles.menuContainer, {marginBottom: 40}]}>
           <Button title="删除工单" color={Colors.iosRed} onPress={() => handleDel()}/>
         </View>
-      </> : ""}
-
+      </> : <></>}
+      <ChangeDutyModal/>
     </ScrollView>
-
   );
 }
