@@ -12,38 +12,43 @@ export function HomeScreen({navigation}) {
   const todayDutyColor = [Colors.iosBlue, Colors.iosViolet, Colors.iosPurple, Colors.iosSkyBlue, Colors.iosGreen, Colors.iosYellow, Colors.iosOrange, Colors.iosCarmine];
 
   React.useEffect(() => {
-    if (!isGetInit) {
-      API.getMyTicketGet({userid: GlobalState.uid.toString()})
-        .then((res) => {
-          setTickets(res.data)
-          setIsGetInit(true)
-        })
-        .catch(e => {
-          if (e.status === 401) {
-            console.error("用户登录过期");
-            navigation.navigate("LoginScreen");
-          } else {
-            Alert.alert("获取数据失败", `${e.message} ${e.status ? e.status : ''}`)
-          }
-        });
-      const date = new Date();
-      const dayOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
-      const today = dayOfWeek[date.getDay() - 1];
-      API.getDutyCalendarGet({})
-        .then((res) => {
-          const duties = [];
-          res.data[today].map((u, i) => {
-            duties.push(u.username);
-          })
-          setTodayDuty(duties);
-        })
-        .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
-    }
+    fetchData();
   }, []);
+
+  const fetchData = () => {
+    API.getMyTicketGet({userid: GlobalState.uid.toString()})
+      .then((res) => {
+        setTickets(res.data)
+      })
+      .catch(e => {
+        if (e.status === 401) {
+          console.error("用户登录过期");
+          navigation.navigate("LoginScreen");
+        } else {
+          Alert.alert("获取数据失败", `${e.message} ${e.status ? e.status : ''}`)
+        }
+      });
+    const date = new Date();
+    const dayOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    const today = dayOfWeek[date.getDay() - 1];
+    API.getDutyCalendarGet({})
+      .then((res) => {
+        const duties = [];
+        res.data[today].map((u, i) => {
+          duties.push(u.username);
+        })
+        setTodayDuty(duties);
+      })
+      .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+  }
 
   const TicketComponent = (props: object) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("TicketDetailScreen", {ticket: props.ticket.id})}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("TicketDetailScreen", {ticket: props.ticket.id});
+          fetchData();
+        }}>
         <View style={Styles.ticketCard}>
           <View style={{flexDirection: "row", alignItems: "center"}}>
             {props.ticket.severity === 1 ?

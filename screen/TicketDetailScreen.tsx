@@ -15,10 +15,11 @@ export function TicketDetailScreen({navigation, route}) {
         .then(res => {
           setTicketDetail(res.data)
           setIsGetInit(true)
+          console.debug(ticketDetail)
         })
         .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
     }
-  }, []);
+  });
 
   const handleDone = () => {
     API.setTicketStatusPost({inlineObject1: {id: ticket, status: 1}})
@@ -73,12 +74,16 @@ export function TicketDetailScreen({navigation, route}) {
           <Text
             style={Styles.infoTextInRow}>{ticketDetail.create_user_name}</Text>
         </View>
-        <View style={Styles.menuCutoff}/>
-        <View style={Styles.menuRowViewNew}>
-          <Text style={Styles.menuText}>负责人</Text>
-          <Text
-            style={Styles.infoTextInRow}>{ticketDetail.duty_user_1_name}</Text>
-        </View>
+        {ticketDetail.duty_user_1 !== 0 ?
+          <>
+            <View style={Styles.menuCutoff}/>
+            <View style={Styles.menuRowViewNew}>
+              <Text style={Styles.menuText}>负责人</Text>
+              <Text
+                style={Styles.infoTextInRow}>{ticketDetail.duty_user_1_name}</Text>
+            </View>
+          </> : <></>
+        }
         {ticketDetail.duty_user_2 !== 0 ?
           <>
             <View style={Styles.menuCutoff}/>
@@ -89,7 +94,6 @@ export function TicketDetailScreen({navigation, route}) {
             </View>
           </> : <></>
         }
-
         {ticketDetail.duty_user_3 !== 0 ?
           <>
             <View style={Styles.menuCutoff}/>

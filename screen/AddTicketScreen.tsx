@@ -4,9 +4,6 @@ import {Colors, Styles} from "../styles";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Ionicons";
 import {API, GlobalState} from "../App";
-import {LoginScreen} from "./LoginScreen";
-import {ChangePhoneScreen} from "./ChangePhoneScreen";
-import {createStackNavigator} from "@react-navigation/stack";
 import {Picker} from "@react-native-picker/picker";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -19,11 +16,12 @@ export function AddTicketScreen({navigation, route}) {
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const [place, setPlace] = useState("");
-  const [startDate, setStartDate] = useState(new Date())
-  const [dutyUser1, setDutyUser1] = useState(0)
-  const [dutyUser2, setDutyUser2] = useState(0)
-  const [dutyUser3, setDutyUser3] = useState(0)
-  const [userData, setUserData] = useState({})
+  const [startDate, setStartDate] = useState(new Date());
+  const [dutyUser1, setDutyUser1] = useState(0);
+  const [dutyUser2, setDutyUser2] = useState(0);
+  const [dutyUser3, setDutyUser3] = useState(0);
+  const [userData, setUserData] = useState({});
+  const [pickerItems, setPickerItems] = useState([]);
 
   React.useEffect(() => {
     if (!isGetInit) {
@@ -37,6 +35,17 @@ export function AddTicketScreen({navigation, route}) {
     }
   }, []);
 
+  React.useEffect(() => {
+    if (userData.users) {
+      const p = [];
+      for (let i = 0; i < userData.count; i++) {
+        p.push(<Picker.Item key={i} value={userData.users[i].uid} label={userData.users[i].username}/>);
+      }
+      p.push(<Picker.Item key={255} value={0} label={"不指定"}/>);
+      setPickerItems(p);
+    }
+  }, [userData])
+
   const showDatePicker = (settingDate: Date) => {
     setDatePickerVisibility(true);
   };
@@ -49,15 +58,6 @@ export function AddTicketScreen({navigation, route}) {
     hideDatePicker();
   };
 
-  let pickerItems = [];
-  // @ts-ignore
-  if (userData.users) {
-    for (let i = 0; i < userData.count; i++) {
-      // @ts-ignore
-      pickerItems.push(<Picker.Item key={i} value={userData.users[i].uid} label={userData.users[i].username}/>)
-    }
-    pickerItems.push(<Picker.Item key={255} value={0} label={"不指定"}/>)
-  }
 
   const getDataFormatString = (dt: Date) => {
     return `${
@@ -65,8 +65,7 @@ export function AddTicketScreen({navigation, route}) {
       (dt.getMonth() + 1).toString().padStart(2, '0')}-${
       dt.getDate().toString().padStart(2, '0')} ${
       dt.getHours().toString().padStart(2, '0')}:${
-      dt.getMinutes().toString().padStart(2, '0')}:${
-      dt.getSeconds().toString().padStart(2, '0')}`
+      dt.getMinutes().toString().padStart(2, '0')}`
   }
   const handleSubmit = () => {
     API.addTicketPost({

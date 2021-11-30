@@ -1,28 +1,28 @@
-import React, {useState} from "react";
-import {Alert, Button, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import React from "react";
+import {Alert, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import {API, GlobalState} from "../App";
+import {API} from "../App";
 import Icon from "react-native-vector-icons/Ionicons";
 
-export function TicketScreen({navigation, route}) {
+export function TicketScreen({navigation}) {
   const [isGetInit, setIsGetInit] = React.useState(false);
   const [tickets, setTickets] = React.useState([])
   const [refreshing, setRefreshing] = React.useState(false)
   const toAddTicket = () => {
-    navigation.navigate("新建工单")
+    navigation.navigate("新建工单");
   }
 
   React.useEffect(() => {
-    if (!isGetInit || refreshing) {
+    fetchData();
+    return navigation.addListener('focus', () => {
       fetchData();
-    }
+    });
   }, [refreshing]);
 
   const fetchData = () => {
     API.getTicketsGet({})
       .then((res) => {
-        // @ts-ignore
         setTickets(res.data)
         setIsGetInit(true)
         setRefreshing(false)
@@ -81,7 +81,6 @@ export function TicketScreen({navigation, route}) {
                       refreshing={false}
                       onRefresh={() => {
                         setRefreshing(true)
-                        console.log("ref")
                       }}
                     />
                   }>
