@@ -1,12 +1,8 @@
 import React, {useState} from "react";
 import {Button, ScrollView, Text, View} from "react-native";
 import {Colors, Styles} from "../styles";
-// @ts-ignore
 import Icon from "react-native-vector-icons/Ionicons";
 import {GlobalState} from "../App";
-import {LoginScreen} from "./LoginScreen";
-import {ChangePhoneScreen} from "./ChangePhoneScreen";
-import {createStackNavigator} from "@react-navigation/stack";
 
 // @ts-ignore
 export function MyScreen({navigation, route}) {

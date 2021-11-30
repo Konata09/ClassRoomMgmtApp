@@ -1,12 +1,10 @@
 import React, {useState} from "react";
 import {Alert, Button, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
-// @ts-ignore
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import {API, GlobalState} from "../App";
 import Icon from "react-native-vector-icons/Ionicons";
 
-// @ts-ignore
 export function TicketScreen({navigation, route}) {
   const [isGetInit, setIsGetInit] = React.useState(false);
   const [tickets, setTickets] = React.useState([])
@@ -17,16 +15,20 @@ export function TicketScreen({navigation, route}) {
 
   React.useEffect(() => {
     if (!isGetInit || refreshing) {
-      API.getTicketsGet({})
-        .then((res) => {
-          // @ts-ignore
-          setTickets(res.data)
-          setIsGetInit(true)
-          setRefreshing(false)
-        })
-        .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+      fetchData();
     }
   }, [refreshing]);
+
+  const fetchData = () => {
+    API.getTicketsGet({})
+      .then((res) => {
+        // @ts-ignore
+        setTickets(res.data)
+        setIsGetInit(true)
+        setRefreshing(false)
+      })
+      .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+  }
 
   const handleTouch = (t: number) => {
     navigation.push("Ticket Detail", {ticket: t})

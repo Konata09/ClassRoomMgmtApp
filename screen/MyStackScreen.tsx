@@ -1,10 +1,4 @@
-import React, {useState} from "react";
-import {Button, ScrollView, Text, View} from "react-native";
-import {Colors, Styles} from "../styles";
-// @ts-ignore
-import Icon from "react-native-vector-icons/Ionicons";
-import {GlobalState} from "../App";
-import {LoginScreen} from "./LoginScreen";
+import React from "react";
 import {ChangePhoneScreen} from "./ChangePhoneScreen";
 import {createStackNavigator} from "@react-navigation/stack";
 import {MyScreen} from "./MyScreen";
@@ -15,8 +9,7 @@ import {ChangeDutyUserScreen} from "./ChangeDutyUserScreen";
 
 const MyStack = createStackNavigator();
 
-// @ts-ignore
-export function MyStackScreen({navigation, route}) {
+export function MyStackScreen() {
   return (
     <MyStack.Navigator initialRouteName="MyHome">
       <MyStack.Screen name="MyHome" component={MyScreen} options={{headerShown: false}}/>

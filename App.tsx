@@ -1,17 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {HomeScreen} from "./screen/HomeScreen";
 
-import {
-  Alert,
-  BackHandler,
-} from 'react-native';
+import {Alert, BackHandler,} from 'react-native';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors,} from 'react-native/Libraries/NewAppScreen';
 
 import {Api} from "./api/Api";
 import {Configuration} from "./api/runtime";
@@ -21,6 +15,7 @@ import {MyStackScreen} from "./screen/MyStackScreen";
 import {ClassroomsStackScreen} from "./screen/ClassroomsStackScreen";
 import {TicketStackScreen} from "./screen/TicketStackScreen";
 import {LoadingScreen} from "./screen/LoadingScreen";
+import {HomeStackScreen} from "./screen/HomeStackScreen";
 
 export var GlobalState = {
   uid: 0,
@@ -87,7 +82,7 @@ export function LoggedInScreen({navigation, route}) {
         tabBarActiveTintColor: Colors.iosBlue,
         tabBarInactiveTintColor: 'gray'
       })}>
-      <Tab.Screen name="Home" component={HomeScreen}/>
+      <Tab.Screen name="Home" component={HomeStackScreen}/>
       <Tab.Screen name="Classroom" component={ClassroomsStackScreen}/>
       <Tab.Screen name="Ticket" component={TicketStackScreen}/>
       <Tab.Screen name="My" component={MyStackScreen}/>
