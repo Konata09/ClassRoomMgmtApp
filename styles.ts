@@ -120,32 +120,57 @@ export const Styles = StyleSheet.create({
     backgroundColor: Colors.deepBg
   },
   sectionHeader: {
-    backgroundColor: Colors.deepBg,
-    paddingTop: 5,
-    paddingBottom: 5,
+    fontSize: 20,
+    fontWeight: '900',
+    paddingTop: 10,
+    paddingBottom: 0,
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 17,
   },
-  classroomSectionHeader: {
+  sectionTitleText: {
+    fontSize: 20,
+    fontWeight: '900',
+    paddingTop: 6,
+    paddingBottom: 0,
+    paddingLeft: 23,
+    paddingRight: 17,
+  },
+  dutyCard: {
     backgroundColor: Colors.highlightBg,
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 14,
-    paddingRight: 14
+    borderRadius: 11,
+    borderColor: Colors.highlightBg,
+    borderStyle: "solid",
+    borderWidth: 0,
+    marginTop: 10,
+    marginLeft: 7,
+    marginRight: 7,
+    marginBottom: 4,
+    padding: 10,
+    width: 110,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    // shadowColor: Colors.iconOff,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 4,
+    // },
+    // shadowOpacity: 0.30,
+    // shadowRadius: 4.65,
+    // elevation: 14,
   },
-  dutyRow: {
-    backgroundColor: Colors.highlightBg,
-    paddingLeft: 20,
-    fontSize: 17,
-    height: 34,
-    justifyContent: "center"
+  dutyCardContainer: {
+    paddingLeft: 13,
+    paddingRight: 13,
+    paddingTop: 0,
+    paddingBottom: 10,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    // justifyContent: "space-between"
   },
-  dutyText: {
-    fontSize: 18,
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 14,
-    paddingRight: 14,
+  dutyCardText: {
+    fontSize: 17
   },
   classroomContainer: {
     backgroundColor: Colors.deepBg,

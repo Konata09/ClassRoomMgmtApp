@@ -19,8 +19,8 @@ export function ClassroomDetailScreen({navigation, route}) {
     if (!isGetInit) {
       API.getRoomDetailGet({classid: classId})
         .then(res => {
-          setClassDetail(res.data)
-          setIsGetInit(true)
+          setClassDetail(res.data);
+          setIsGetInit(true);
         })
         .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
     }

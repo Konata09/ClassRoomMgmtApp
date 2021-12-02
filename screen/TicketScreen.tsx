@@ -6,8 +6,8 @@ import {API} from "../App";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export function TicketScreen({navigation}) {
-  const [tickets, setTickets] = React.useState([])
-  const [refreshing, setRefreshing] = React.useState(false)
+  const [tickets, setTickets] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
   const toAddTicket = () => {
     navigation.navigate("新建工单");
   }
@@ -22,14 +22,14 @@ export function TicketScreen({navigation}) {
   const fetchData = () => {
     API.getTicketsGet({})
       .then((res) => {
-        setTickets(res.data)
-        setRefreshing(false)
+        setTickets(res.data);
+        setRefreshing(false);
       })
       .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
   }
 
   const handleTouch = (t: number) => {
-    navigation.push("Ticket Detail", {ticket: t})
+    navigation.push("Ticket Detail", {ticket: t});
   }
 
   const TicketComponent = (props) => {

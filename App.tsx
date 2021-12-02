@@ -14,7 +14,7 @@ import {LoginScreen} from "./screen/LoginScreen";
 import {MyStackScreen} from "./screen/MyStackScreen";
 import {ClassroomsStackScreen} from "./screen/ClassroomsStackScreen";
 import {TicketStackScreen} from "./screen/TicketStackScreen";
-import {LoadingScreen} from "./screen/LoadingScreen";
+import {FirstScreen} from "./screen/FirstScreen";
 import {HomeStackScreen} from "./screen/HomeStackScreen";
 
 export var GlobalState = {
@@ -25,6 +25,7 @@ export var GlobalState = {
   isStaff: false,
   phone: "",
   // serverAddr: "http://172.31.166.35:63112/api/v2",
+  // serverAddr: "http://172.31.58.253:63112/api/v2",
   serverAddr: "http://172.31.90.11:63112/api/v2",
   token: "unknown",
   tokenExp: 0,
@@ -96,7 +97,7 @@ const App = () => {
       <RootStack.Navigator initialRouteName="LoadingScreen" screenOptions={{headerShown: false}}>
         <RootStack.Screen name="LoggedInScreen" component={LoggedInScreen}/>
         <RootStack.Screen name="LoginScreen" component={LoginScreen}/>
-        <RootStack.Screen name="LoadingScreen" component={LoadingScreen}/>
+        <RootStack.Screen name="LoadingScreen" component={FirstScreen}/>
       </RootStack.Navigator>
     </NavigationContainer>
   );

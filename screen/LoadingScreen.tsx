@@ -1,37 +1,12 @@
 import * as React from 'react';
 import {Animated, Easing, PanResponder, View} from 'react-native';
-import {Svg, Circle, G, Path} from 'react-native-svg';
-import {useEffect} from "react";
-import {getAsyncStorage, setAsyncStorage, updateGlobalStateFromJWT} from "../utils";
-import {API, GlobalState} from "../App";
+import {Circle, G, Path, Svg} from 'react-native-svg';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
-// @ts-ignore
-export function LoadingScreen({navigation, route}) {
-  useEffect(() => {
-    async function checkLoginState() {
-      const token = await getAsyncStorage("token");
-      if (token) {
-        updateGlobalStateFromJWT(token);
-        if (GlobalState.tokenExp > Math.floor((Date.now() + 60000) / 1000)) { // 如果 Token 将在 1 分钟内过期 那么重新登录
-          const res = await API.refreshPost({inlineObject11: {username: GlobalState.username, uid: GlobalState.uid}})
-            .catch(_ => null);
-          if (res && res.retcode === 0) {
-            updateGlobalStateFromJWT(res.data.token);
-            await setAsyncStorage("token", res.data.token);
-            navigation.navigate("LoggedInScreen");
-            return
-          }
-        }
-      }
-      navigation.navigate("LoginScreen");
-    }
-    checkLoginState()
-  }, [])
-
+export function LoadingScreen() {
   const {style} = animateTransform({
     type: 'rotate',
     from: '0 18 18',
@@ -59,32 +34,7 @@ export function LoadingScreen({navigation, route}) {
   );
 }
 
-/*
-  <Svg
-    width="38px"
-    height="38px"
-    viewBox="0 0 38 38"
-    xmlns="http://www.w3.org/2000/svg"
-    stroke="blue"
-    aria-label="spinner"
-  >
-    <G fill="none" fillRule="evenodd">
-      <G transform="translate(1 1)" strokeWidth="2">
-        <Circle strokeOpacity=".5" cx="18" cy="18" r="18" />
-        <Path d="M36 18c0-9.94-8.06-18-18-18">
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0 18 18"
-            to="360 18 18"
-            dur="1s"
-            repeatCount="indefinite"
-          />
-        </Path>
-      </G>
-    </G>
-  </svg>
-*/
+
 function animateTransform({type, from, to, dur, repeatCount}) {
   const duration = parseFloat(dur.slice(0, -1)) * 1000;
   const [fromAngle, fromCX, fromCY] = from.split(' ').map(Number);

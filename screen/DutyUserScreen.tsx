@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Alert,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import {Alert, ScrollView, Text, View} from "react-native";
 import {Styles} from "../styles";
 import {API} from "../App";
 import {Picker} from "@react-native-picker/picker";
@@ -54,54 +48,49 @@ export function DutyUserScreen() {
   return (
     <ScrollView>
       <View style={Styles.listContainer}>
-        <View style={Styles.sectionHeader}><Text>星期一</Text></View>
-        {mondayDutyData.map((o, i) => {
-          return <TouchableOpacity>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期二</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {tuesdayDutyData.map((o, i) => {
-          return <TouchableOpacity>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期三</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {wednesdayDutyData.map((o, i) => {
-          return <TouchableOpacity>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期四</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {thursdayDutyData.map((o, i) => {
-          return <TouchableOpacity>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期五</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {fridayDutyData.map((o, i) => {
-          return <TouchableOpacity>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期六</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {saturdayDutyData.map((o, i) => {
-          return <TouchableOpacity>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期日</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {sundayDutyData.map((o, i) => {
-          return <TouchableOpacity>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
+        <View><Text style={Styles.sectionTitleText}>星期一</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {mondayDutyData.map((o, i) => {
+            return <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期二</Text></View>
+        <View style={Styles.dutyCardContainer}>
+
+          {tuesdayDutyData.map((o, i) => {
+            return <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期三</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {wednesdayDutyData.map((o, i) => {
+            return <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期四</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {thursdayDutyData.map((o, i) => {
+            return <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期五</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {fridayDutyData.map((o, i) => {
+            return <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期六</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {saturdayDutyData.map((o, i) => {
+            return <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期日</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {sundayDutyData.map((o, i) => {
+            return <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+          })}
+        </View>
       </View>
     </ScrollView>
   );

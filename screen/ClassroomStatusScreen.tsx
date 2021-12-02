@@ -1,45 +1,60 @@
-import React, {useState} from "react";
-import {Alert, Button, Dimensions, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import React from "react";
+import {Alert, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
-import {VLCPlayer, VlCPlayerView} from 'react-native-vlc-media-player';
+import {VLCPlayer} from 'react-native-vlc-media-player';
 import {API} from "../App";
-import {isValidNumber} from "react-native-gesture-handler/lib/typescript/web/utils";
 import Feather from "react-native-vector-icons/Feather";
 import {getControllerColor} from "./ClassroomsScreen";
 
-// @ts-ignore
 export function ClassroomStatusScreen({navigation, route}) {
+  const deviceTypeMap = {
+    1: "中控",
+    2: "云盒",
+    3: "交换机(Ruijie)",
+    4: "大华摄像头",
+    5: "天地伟业摄像头",
+    6: "网络对讲",
+    7: "教师画面(电子云台)",
+    8: "屏幕编码器",
+    9: "教师画面(机械云台)",
+    10: "学生画面",
+    11: "电子班牌",
+    12: "交换机(H3C)"
+  }
   const {id: classId, group_name, name} = route.params;
   const [classStatus, setClassStatus] = React.useState({});
   const [classDetail, setClassDetail] = React.useState({});
   const [isGetInit, setIsGetInit] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false)
-  const deviceTypeMap = {
-    1: "中控",
-    2: "云盒",
-    3: "交换机",
-    4: "大华摄像头",
-    5: "天地伟业摄像头",
-    6: "网络对讲",
-    7: "直播摄像头",
-    8: "屏幕编码器",
-  }
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const [powerIconColor, setPowerIconColor] = React.useState(Colors.deepBg);
   React.useEffect(() => {
     if (!isGetInit || refreshing) {
       API.getRoomStatusGet({classid: classId})
         .then(res => {
-          setClassStatus(res.data)
-          setRefreshing(false)
+          setClassStatus(res.data);
+          setIsGetInit(true);
         })
         .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
       API.getRoomDetailGet({classid: classId})
         .then(res => {
-          setClassDetail(res.data)
-          setIsGetInit(true)
+          setClassDetail(res.data);
+          setRefreshing(false);
         })
         .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
     }
   }, [refreshing]);
+
+  React.useEffect(() => {
+    if (classStatus.DeviceStatus) {
+      for (const d of classStatus.DeviceStatus) {
+        if (findDeviceTypeById(d.Id) === 1) {
+          setPowerIconColor(getControllerColor(d.Status));
+        }
+      }
+    }
+  }, [classStatus])
+
   const findDeviceNameById = (id: string) => {
     for (const v of classDetail.devices) {
       if (v.id === id) {
@@ -112,8 +127,8 @@ export function ClassroomStatusScreen({navigation, route}) {
   let VideoCard = []
   if (classDetail.cameras) {
     for (const cam of classDetail.cameras) {
-      if (cam.device_type === 4) {
-        VideoCard.push(
+      if (cam.device_type === 4) { // DaHua
+        VideoCard.unshift(
           <View style={Styles.videoCard}>
             <VLCPlayer
               style={{width: 326, height: 183}}
@@ -122,8 +137,8 @@ export function ClassroomStatusScreen({navigation, route}) {
             />
           </View>
         )
-      } else if (cam.device_type === 7) {
-        VideoCard.push(
+      } else if (cam.device_type === 7 || cam.device_type === 9 || cam.device_type === 10) { // ZhiBo
+        VideoCard.unshift(
           <View style={Styles.videoCard}>
             <VLCPlayer
               style={{width: 326, height: 183}}
@@ -132,27 +147,27 @@ export function ClassroomStatusScreen({navigation, route}) {
             />
           </View>
         )
-      } else if (cam.device_type === 8) {
+      } else if (cam.device_type === 8) { // Screen Encoder
         VideoCard.push(
           <View style={Styles.videoCard}>
             <VLCPlayer
               style={{width: 244, height: 183}}
-              videoAspectRatio="4:3"
+              videoAspectRatio="16:9"
               source={{uri: cam.rtsp_addr}}
             />
           </View>
         )
+      } else if (cam.device_type === 5) { // Tiandy
+        VideoCard.push(
+          <View style={Styles.videoCard}>
+            <VLCPlayer
+              style={{width: 244, height: 183}}
+              videoAspectRatio="16:9"
+              source={{uri: cam.rtsp_addr.substring(0, 7) + "admin:admin@" + cam.rtsp_addr.substring(7)}}
+            />
+          </View>
+        )
       }
-    }
-  }
-  const getControllerColorInStatusScreen = () => {
-    if (classStatus.DeviceStatus) {
-      for (const d of classStatus.DeviceStatus) {
-        if (findDeviceTypeById(d.Id) === 1) {
-          return getControllerColor(d.Status)
-        }
-      }
-      return Colors.deepBg
     }
   }
   const handleTouch = (id: number, group_name: string, name: string) => {
@@ -165,7 +180,6 @@ export function ClassroomStatusScreen({navigation, route}) {
         refreshing={false}
         onRefresh={() => {
           setRefreshing(true)
-          console.log("ref")
         }}
       />
     }>
@@ -180,7 +194,7 @@ export function ClassroomStatusScreen({navigation, route}) {
             </Text>
           </View>
           <View style={Styles.classStatusIconContainer}>
-            <Feather name={"power"} style={{color: getControllerColorInStatusScreen() || Colors.deepBg}} size={26}/>
+            <Feather name={"power"} style={{color: powerIconColor}} size={26}/>
             <TouchableOpacity onPress={() => handleTouch(classId, group_name, name)}>
               <Feather name={"edit"} style={{marginLeft: 15, color: Colors.iosBlue}} size={26}/>
             </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Alert, Button, Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Alert, Button, Modal, Pressable, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
 // @ts-ignore
 import Icon from "react-native-vector-icons/Ionicons";
@@ -198,59 +198,66 @@ export function ChangeDutyUserScreen({navigation}) {
     )
   }
 
-  const styles = StyleSheet.create({});
-
   return (
     <ScrollView>
       <View style={Styles.listContainer}>
-        <View style={Styles.sectionHeader}><Text>星期一</Text></View>
-        {mondayDutyData.map((o, i) => {
-          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Monday")}>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期二</Text></View>
+        <View><Text style={Styles.sectionTitleText}>星期一</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {mondayDutyData.map((o, i) => {
+            return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Monday")}>
+              <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+            </TouchableOpacity>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期二</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {tuesdayDutyData.map((o, i) => {
+            return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Tuesday")}>
+              <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+            </TouchableOpacity>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期三</Text></View>
         <View style={Styles.menuCutoff}/>
-        {tuesdayDutyData.map((o, i) => {
-          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Tuesday")}>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期三</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {wednesdayDutyData.map((o, i) => {
-          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Wednesday")}>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期四</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {thursdayDutyData.map((o, i) => {
-          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Thursday")}>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期五</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {fridayDutyData.map((o, i) => {
-          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Friday")}>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期六</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {saturdayDutyData.map((o, i) => {
-          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Saturday")}>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
-        <View style={Styles.sectionHeader}><Text>星期日</Text></View>
-        <View style={Styles.menuCutoff}/>
-        {sundayDutyData.map((o, i) => {
-          return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Sunday")}>
-            <View style={Styles.dutyRow}><Text>{o.username}</Text></View>
-          </TouchableOpacity>
-        })}
+        <View style={Styles.dutyCardContainer}>
+          {wednesdayDutyData.map((o, i) => {
+            return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Wednesday")}>
+              <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+            </TouchableOpacity>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期四</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {thursdayDutyData.map((o, i) => {
+            return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Thursday")}>
+              <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+            </TouchableOpacity>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期五</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {fridayDutyData.map((o, i) => {
+            return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Friday")}>
+              <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+            </TouchableOpacity>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期六</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {saturdayDutyData.map((o, i) => {
+            return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Saturday")}>
+              <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+            </TouchableOpacity>
+          })}
+        </View>
+        <View><Text style={Styles.sectionTitleText}>星期日</Text></View>
+        <View style={Styles.dutyCardContainer}>
+          {sundayDutyData.map((o, i) => {
+            return <TouchableOpacity onPress={() => handleTouch(o.id, o.uid, "Sunday")}>
+              <View style={Styles.dutyCard}><Text style={Styles.dutyCardText}>{o.username}</Text></View>
+            </TouchableOpacity>
+          })}
+        </View>
       </View>
       <AddModal/>
       <EditModal/>

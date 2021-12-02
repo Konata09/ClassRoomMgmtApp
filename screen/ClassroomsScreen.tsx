@@ -1,10 +1,11 @@
-import React, {useState} from "react";
-import {Alert, Button, Pressable, ScrollView, Text, TouchableHighlight, TouchableOpacity, View} from "react-native";
+import React from "react";
+import {Alert, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
 import Icon from "react-native-vector-icons/Ionicons";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {API} from "../App";
+import {LoadingScreen} from "./LoadingScreen";
 
 export const getControllerColor = (status: number) => {
   switch (status) {
@@ -28,17 +29,24 @@ export function ClassroomsScreen({navigation, route}) {
   const [classStatus, setClassStatus] = React.useState({});
   const [isGetInit, setIsGetInit] = React.useState(false);
   const [groups, setGroups] = React.useState({});
+  const [refreshing, setRefreshing] = React.useState(false);
+
   React.useEffect(() => {
-    if (!isGetInit) {
-      API.getRoomsGet({ping: "true"})
-        .then(res => {
-          setClassStatus(res.data)
-          console.log(res.data)
-          setIsGetInit(true)
-        })
-        .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
-    }
-  }, []);
+    fetchData();
+    return navigation.addListener('focus', () => {
+      fetchData();
+    });
+  }, [refreshing]);
+
+  const fetchData = () => {
+    API.getRoomsGet({ping: "true"})
+      .then(res => {
+        setClassStatus(res.data);
+        setIsGetInit(true);
+        setRefreshing(false);
+      })
+      .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
+  }
 
   React.useEffect(() => {
     if (typeof classStatus.classrooms !== 'undefined' && Object.keys(groups).length === 0) {
@@ -125,7 +133,7 @@ export function ClassroomsScreen({navigation, route}) {
     }
     Groups.push(
       <>
-        <View style={Styles.classroomSectionHeader}><Text>{name}</Text></View>
+        <View><Text style={Styles.sectionTitleText}>{name}</Text></View>
         <View style={Styles.classroomContainer}>
           {ClassroomsGroups[id]}
         </View>
@@ -134,10 +142,17 @@ export function ClassroomsScreen({navigation, route}) {
   }
 
   return (
-    <ScrollView>
+    isGetInit ? <ScrollView refreshControl={
+      <RefreshControl
+        refreshing={false}
+        onRefresh={() => {
+          setRefreshing(true)
+        }}
+      />
+    }>
       <View style={Styles.listContainer}>
         {Groups}
       </View>
-    </ScrollView>
-  );
+    </ScrollView> : <LoadingScreen/>
+  )
 }
