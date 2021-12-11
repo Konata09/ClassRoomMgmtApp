@@ -26,8 +26,9 @@ export function ClassroomStatusScreen({navigation, route}) {
   const [classDetail, setClassDetail] = React.useState({});
   const [isGetInit, setIsGetInit] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
-
+  const [PingItemComponents, setPingItemComponents] = React.useState([]);
   const [powerIconColor, setPowerIconColor] = React.useState(Colors.deepBg);
+
   React.useEffect(() => {
     if (!isGetInit || refreshing) {
       API.getRoomStatusGet({classid: classId})
@@ -46,16 +47,27 @@ export function ClassroomStatusScreen({navigation, route}) {
   }, [refreshing]);
 
   React.useEffect(() => {
-    if (classStatus.DeviceStatus) {
+    if (classStatus.DeviceStatus && classDetail.devices) {
       for (const d of classStatus.DeviceStatus) {
         if (findDeviceTypeById(d.Id) === 1) {
           setPowerIconColor(getControllerColor(d.Status));
         }
       }
     }
-  }, [classStatus])
+  }, [classStatus, classDetail])
+
+  React.useEffect(() => {
+    let PingItemComponentsTmp = [];
+    if (classStatus.DeviceStatus && classDetail.devices) {
+      for (let i = 1; i < classStatus.DeviceStatus.length; i++) {
+        PingItemComponentsTmp.push(<PingItemComponent status={classStatus.DeviceStatus[i]}/>)
+      }
+    }
+    setPingItemComponents(PingItemComponentsTmp)
+  }, [classStatus, classDetail])
 
   const findDeviceNameById = (id: string) => {
+    console.log(classDetail.devices)
     for (const v of classDetail.devices) {
       if (v.id === id) {
         return v.name;
@@ -63,6 +75,7 @@ export function ClassroomStatusScreen({navigation, route}) {
     }
   }
   const findDeviceTypeById = (id: string) => {
+    console.log(classDetail.devices)
     for (const v of classDetail.devices) {
       if (v.id === id) {
         return v.typeid;
@@ -95,12 +108,7 @@ export function ClassroomStatusScreen({navigation, route}) {
       </TouchableOpacity>
     )
   }
-  let PingItemComponents = [];
-  if (classStatus.DeviceStatus) {
-    for (let i = 1; i < classStatus.DeviceStatus.length; i++) {
-      PingItemComponents.push(<PingItemComponent status={classStatus.DeviceStatus[i]}/>)
-    }
-  }
+
   const cmdNameMap = {
     1: "中控开",
     2: "中控关",
@@ -151,7 +159,7 @@ export function ClassroomStatusScreen({navigation, route}) {
         VideoCard.push(
           <View style={Styles.videoCard}>
             <VLCPlayer
-              style={{width: 244, height: 183}}
+              style={{width: 326, height: 183}}
               videoAspectRatio="16:9"
               source={{uri: cam.rtsp_addr}}
             />
@@ -161,7 +169,7 @@ export function ClassroomStatusScreen({navigation, route}) {
         VideoCard.push(
           <View style={Styles.videoCard}>
             <VLCPlayer
-              style={{width: 244, height: 183}}
+              style={{width: 326, height: 183}}
               videoAspectRatio="16:9"
               source={{uri: cam.rtsp_addr.substring(0, 7) + "admin:admin@" + cam.rtsp_addr.substring(7)}}
             />

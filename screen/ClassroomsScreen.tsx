@@ -9,17 +9,17 @@ import {LoadingScreen} from "./LoadingScreen";
 
 export const getControllerColor = (status: number) => {
   switch (status) {
-    case -1:
+    case -1: // Fail
       return Colors.tabBorder
     case 0:
       return Colors.highlightBg
-    case 1:
+    case 1: // ON
       return Colors.iosGreen
-    case 2:
+    case 2: // OFF
       return Colors.iconOff
-    case 3:
+    case 3: // WAIT
       return Colors.iosYellow
-    case 4:
+    case 4: // Unknown
       return Colors.iosPurple
   }
 }
