@@ -22,6 +22,8 @@ export function ClassroomStatusScreen({navigation, route}) {
     12: "交换机(H3C)"
   }
   const {id: classId, group_name, name} = route.params;
+  const [courseName, setCourseName] = React.useState("");
+  const [teacherName, setTeacherName] = React.useState("");
   const [classStatus, setClassStatus] = React.useState({});
   const [classDetail, setClassDetail] = React.useState({});
   const [isGetInit, setIsGetInit] = React.useState(false);
@@ -33,12 +35,14 @@ export function ClassroomStatusScreen({navigation, route}) {
     if (!isGetInit || refreshing) {
       API.getRoomStatusGet({classid: classId})
         .then(res => {
+          // console.log(res)
           setClassStatus(res.data);
           setIsGetInit(true);
         })
         .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
       API.getRoomDetailGet({classid: classId})
         .then(res => {
+          // console.log(res)
           setClassDetail(res.data);
           setRefreshing(false);
         })
@@ -66,8 +70,14 @@ export function ClassroomStatusScreen({navigation, route}) {
     setPingItemComponents(PingItemComponentsTmp)
   }, [classStatus, classDetail])
 
+  React.useEffect(() => {
+    if (classStatus.CourseName && classStatus.TeacherName) {
+      setTeacherName(classStatus.TeacherName);
+      setCourseName(classStatus.CourseName);
+    }
+  }, [classStatus])
+
   const findDeviceNameById = (id: string) => {
-    console.log(classDetail.devices)
     for (const v of classDetail.devices) {
       if (v.id === id) {
         return v.name;
@@ -75,7 +85,6 @@ export function ClassroomStatusScreen({navigation, route}) {
     }
   }
   const findDeviceTypeById = (id: string) => {
-    console.log(classDetail.devices)
     for (const v of classDetail.devices) {
       if (v.id === id) {
         return v.typeid;
@@ -103,7 +112,7 @@ export function ClassroomStatusScreen({navigation, route}) {
     return (
       <TouchableOpacity onPress={() => sendCmd(props.cmdId)}>
         <View style={Styles.cmdButtonWrapper}>
-          <Text style={Styles.cmdButtonText}>{props.title}</Text>
+          <Text style={props.disabled ? Styles.cmdButtonDisabledText : Styles.cmdButtonText}>{props.title}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -193,13 +202,27 @@ export function ClassroomStatusScreen({navigation, route}) {
     }>
       <View style={Styles.cardContainer}>
         <View style={Styles.classroomHeader}>
-          <View>
-            <Text style={Styles.bigName}>
-              {name}
-            </Text>
-            <Text style={Styles.smallName}>
-              {group_name}
-            </Text>
+          <View style={{flexDirection: "column", flex: 1}}>
+            <View style={{flexDirection: "row", alignItems: "center"}}>
+              <Text style={Styles.bigName}>
+                {name}
+              </Text>
+              <View style={{alignItems: "center", flex: 1}}>
+                <Text style={Styles.courseName} numberOfLines={1}>
+                  {courseName}
+                </Text>
+              </View>
+            </View>
+            <View style={{flexDirection: "row"}}>
+              <Text style={Styles.smallName}>
+                {group_name}
+              </Text>
+              <View style={{alignItems: "center", flex: 1}}>
+                <Text style={Styles.teacherName}>
+                  {teacherName}
+                </Text>
+              </View>
+            </View>
           </View>
           <View style={Styles.classStatusIconContainer}>
             <Feather name={"power"} style={{color: powerIconColor}} size={26}/>
@@ -216,7 +239,7 @@ export function ClassroomStatusScreen({navigation, route}) {
           <MyButton title={"中控关"} cmdId={2}/>
           <MyButton title={"云盒开"} cmdId={3}/>
           <MyButton title={"云盒关"} cmdId={4}/>
-          <MyButton title={"投影云盒"} cmdId={5}/>
+          <MyButton title={"投影云盒"} cmdId={5} disabled={1}/>
           <MyButton title={"幕布升"} cmdId={6}/>
           <MyButton title={"幕布停"} cmdId={7}/>
           <MyButton title={"幕布降"} cmdId={8}/>

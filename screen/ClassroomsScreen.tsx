@@ -106,7 +106,7 @@ export function ClassroomsScreen({navigation, route}) {
               left: 20,
               top: 65,
               fontSize: 25,
-              color: props.class.rec ? Colors.iosOrange : Colors.iconOff,
+              color: props.class.rec ? Colors.iosRed : Colors.iconOff,
               position: "absolute"
             }}
                     name={"controller-record"}/>

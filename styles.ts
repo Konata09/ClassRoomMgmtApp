@@ -201,6 +201,16 @@ export const Styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 32
   },
+  courseName: {
+    paddingLeft: 18,
+    fontWeight: "bold",
+    fontSize: 22,
+    overflow: "hidden",
+  },
+  teacherName: {
+    fontSize: 18,
+    color: Colors.lightText,
+  },
   smallName: {
     fontSize: 18,
     color: Colors.lightText
@@ -270,6 +280,10 @@ export const Styles = StyleSheet.create({
     color: Colors.iosBlue,
     fontSize: 18
   },
+  cmdButtonDisabledText: {
+    color: Colors.tabBorder,
+    fontSize: 18
+  },
   videoCard: {
     alignContent: "center",
     marginTop: 10,
@@ -293,7 +307,8 @@ export const Styles = StyleSheet.create({
   classStatusIconContainer: {
     flexDirection: "row",
     paddingTop: 20,
-    paddingRight: 5
+    paddingRight: 5,
+    flexShrink: 0
   },
   menuInput: {
     fontSize: 17,
