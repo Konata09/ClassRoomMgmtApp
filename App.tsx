@@ -24,10 +24,10 @@ export var GlobalState = {
   isAdmin: false,
   isStaff: false,
   phone: "",
-  // serverAddr: "http://172.31.166.35:63112/api/v2",
+  serverAddr: "http://172.31.161.101:63112/api/v2",
   // serverAddr: "http://172.31.58.253:63112/api/v2",
   // serverAddr: "http://172.31.90.11:63112/api/v2",
-  serverAddr: "http://172.31.90.152:63112/api/v2",
+  // serverAddr: "http://172.31.90.152:63112/api/v2",
   token: "unknown",
   tokenExp: 0,
 }

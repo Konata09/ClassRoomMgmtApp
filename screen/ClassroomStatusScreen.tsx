@@ -1,5 +1,5 @@
-import React from "react";
-import {Alert, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import React, {useEffect, useMemo, useState} from "react";
+import {Alert, Button, RefreshControl, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {Colors, Styles} from "../styles";
 import {VLCPlayer} from 'react-native-vlc-media-player';
 import {API} from "../App";
@@ -21,17 +21,33 @@ export function ClassroomStatusScreen({navigation, route}) {
     11: "电子班牌",
     12: "交换机(H3C)"
   }
+  /** 数组作为 useEffect 依赖
+   const {current: dep} = React.useRef(['dep']); // useRef 保存 current 的值 生命周期中不销毁
+   useEffect(() => {
+    setCount(count + 1);
+  }, [dep])
+   **/
+  /** 对象作为 useEffect 依赖
+   const obj = useMemo(() => ({ // useMemo 只在依赖项改变时重新计算 不会 reRender
+    name: 'pp'
+  }), [])
+   useEffect(() => {
+    setCount(count + 1)
+  }, [obj])
+   **/
   const {id: classId, group_name, name} = route.params;
-  const [courseName, setCourseName] = React.useState("");
-  const [teacherName, setTeacherName] = React.useState("");
-  const [classStatus, setClassStatus] = React.useState({});
-  const [classDetail, setClassDetail] = React.useState({});
-  const [isGetInit, setIsGetInit] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [PingItemComponents, setPingItemComponents] = React.useState([]);
-  const [powerIconColor, setPowerIconColor] = React.useState(Colors.deepBg);
+  const [courseName, setCourseName] = useState("");
+  const [teacherName, setTeacherName] = useState("");
+  const [classStatus, setClassStatus] = useState({});
+  const [classDetail, setClassDetail] = useState({});
+  const [isGetInit, setIsGetInit] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [PingItemComponents, setPingItemComponents] = useState([]);
+  const [powerIconColor, setPowerIconColor] = useState(Colors.deepBg);
+  const [muteState, setMuteState] = useState({});
+  const [pauseState, setPauseState] = useState({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isGetInit || refreshing) {
       API.getRoomStatusGet({classid: classId})
         .then(res => {
@@ -42,7 +58,7 @@ export function ClassroomStatusScreen({navigation, route}) {
         .catch(e => Alert.alert("获取数据失败", e.message + ' ' + e.status));
       API.getRoomDetailGet({classid: classId})
         .then(res => {
-          // console.log(res)
+          console.debug(res)
           setClassDetail(res.data);
           setRefreshing(false);
         })
@@ -50,7 +66,7 @@ export function ClassroomStatusScreen({navigation, route}) {
     }
   }, [refreshing]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (classStatus.DeviceStatus && classDetail.devices) {
       for (const d of classStatus.DeviceStatus) {
         if (findDeviceTypeById(d.Id) === 1) {
@@ -60,7 +76,7 @@ export function ClassroomStatusScreen({navigation, route}) {
     }
   }, [classStatus, classDetail])
 
-  React.useEffect(() => {
+  useEffect(() => {
     let PingItemComponentsTmp = [];
     if (classStatus.DeviceStatus && classDetail.devices) {
       for (let i = 1; i < classStatus.DeviceStatus.length; i++) {
@@ -70,7 +86,7 @@ export function ClassroomStatusScreen({navigation, route}) {
     setPingItemComponents(PingItemComponentsTmp)
   }, [classStatus, classDetail])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (classStatus.CourseName && classStatus.TeacherName) {
       setTeacherName(classStatus.TeacherName);
       setCourseName(classStatus.CourseName);
@@ -141,17 +157,49 @@ export function ClassroomStatusScreen({navigation, route}) {
       })
       .catch(e => Alert.alert("发送命令失败", e.message + ' ' + e.status));
   }
+  const setMute = (mute, id) => {
+    const mState = muteState;
+    mState[id] = mute;
+    setMuteState(mState);
+  }
+  const setPause = (pause, id) => {
+    const pState = pauseState;
+    pState[id] = pause;
+    setPauseState(pState);
+  }
   let VideoCard = []
   if (classDetail.cameras) {
     for (const cam of classDetail.cameras) {
       if (cam.device_type === 4) { // DaHua
+        // setPause(false, cam.id)
+        // setMute(false, cam.id);
         VideoCard.unshift(
           <View style={Styles.videoCard}>
             <VLCPlayer
               style={{width: 326, height: 183}}
               videoAspectRatio="16:9"
-              source={{uri: cam.rtsp_addr.substring(0, 7) + "admin:abc123456@" + cam.rtsp_addr.substring(7)}}
+              paused={pauseState[cam.id]}
+              muted={muteState[cam.id]}
+              source={{
+                uri: cam.rtsp_addr.substring(0, 7) + "admin:abc123456@" + cam.rtsp_addr.substring(7),
+                initType: 2,
+                hwDecoderEnabled: 1,
+                hwDecoderForced: 1,
+                initOptions: [
+                  // '--no-audio',
+                  '--rtsp-tcp',
+                  '--network-caching=50',
+                  '--rtsp-caching=50',
+                  '--no-stats',
+                  '--tcp-caching=50',
+                  '--realrtsp-caching=50',
+                ],
+              }}
             />
+            {/*<Button onPress={() => setPause(true, cam.id)} title={"暂停"}>*/}
+            {/*</Button>*/}
+            {/*<Button onPress={() => setMute(true, cam.id)} title={"静音"}>*/}
+            {/*</Button>*/}
           </View>
         )
       } else if (cam.device_type === 7 || cam.device_type === 9 || cam.device_type === 10) { // ZhiBo
@@ -160,8 +208,21 @@ export function ClassroomStatusScreen({navigation, route}) {
             <VLCPlayer
               style={{width: 326, height: 183}}
               videoAspectRatio="16:9"
-              source={{uri: cam.rtsp_addr}}
-            />
+              source={{
+                uri: cam.rtsp_addr,
+                initType: 2,
+                hwDecoderEnabled: 1,
+                hwDecoderForced: 1,
+                initOptions: [
+                  // '--no-audio',
+                  '--rtsp-tcp',
+                  '--network-caching=50',
+                  '--rtsp-caching=50',
+                  '--no-stats',
+                  '--tcp-caching=50',
+                  '--realrtsp-caching=50',
+                ],
+              }}/>
           </View>
         )
       } else if (cam.device_type === 8) { // Screen Encoder
@@ -170,8 +231,21 @@ export function ClassroomStatusScreen({navigation, route}) {
             <VLCPlayer
               style={{width: 326, height: 183}}
               videoAspectRatio="16:9"
-              source={{uri: cam.rtsp_addr}}
-            />
+              source={{
+                uri: cam.rtsp_addr,
+                initType: 2,
+                hwDecoderEnabled: 1,
+                hwDecoderForced: 1,
+                initOptions: [
+                  // '--no-audio',
+                  '--rtsp-tcp',
+                  '--network-caching=50',
+                  '--rtsp-caching=50',
+                  '--no-stats',
+                  '--tcp-caching=50',
+                  '--realrtsp-caching=50',
+                ],
+              }}/>
           </View>
         )
       } else if (cam.device_type === 5) { // Tiandy
@@ -180,7 +254,26 @@ export function ClassroomStatusScreen({navigation, route}) {
             <VLCPlayer
               style={{width: 326, height: 183}}
               videoAspectRatio="16:9"
-              source={{uri: cam.rtsp_addr.substring(0, 7) + "admin:admin@" + cam.rtsp_addr.substring(7)}}
+              source={{
+                uri: cam.rtsp_addr.substring(0, 7) + "admin:admin@" + cam.rtsp_addr.substring(7),
+                initType: 2,
+                hwDecoderEnabled: 1,
+                hwDecoderForced: 1,
+                initOptions: [
+                  // '--no-audio',
+                  '--rtsp-tcp',
+                  '--network-caching=50',
+                  '--rtsp-caching=50',
+                  '--no-stats',
+                  '--tcp-caching=50',
+                  '--realrtsp-caching=50',
+                ],
+              }}
+              isLive={true}
+              autoReloadLive={true}
+              onEnded={(e) => console.log("end " + e)}
+              onStopped={(e) => console.log("onstopped " + e)}
+              onError={(e) => console.log('onerr ', e)}
             />
           </View>
         )
@@ -194,7 +287,7 @@ export function ClassroomStatusScreen({navigation, route}) {
   return (
     <ScrollView refreshControl={
       <RefreshControl
-        refreshing={false}
+        refreshing={refreshing}
         onRefresh={() => {
           setRefreshing(true)
         }}
